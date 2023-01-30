@@ -5,13 +5,14 @@ main = tkinter.Tk()
 
 # Define size of Window
 main.geometry("500x500")
-
+                          
 # Define Canvas Object with a white background
 drawCanvas = tkinter.Canvas(main, bg='white')
 
 # Bind the canvas to our app with north-west as (0,0) w.r.t our Window,
 # Expand, Fill enables us to use the complete window even if we desire to resize.
 drawCanvas.pack(anchor='nw', expand=1, fill='both')
+
 
 points = []
 # To store the points while drag (Useful for next part)
@@ -31,6 +32,17 @@ def drawLine(event):
 
 drawCanvas.bind("<Button-1>", markPoints)
 drawCanvas.bind("<B1-Motion>", drawLine)
+
+# part d: clearing the canvas
+def clearScreen():
+    drawCanvas.delete('all')
+    
+
+btn = tkinter.Button(main, text = 'Clear Canvas', bd = '5',
+                          command = clearScreen)
+
+btn.pack(side = 'bottom')
+
 # print(points)
 # Put the Tkinter App in loop so it keeps running until terminated explicitly using Ctrl+C
 main.mainloop()
