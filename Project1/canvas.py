@@ -15,18 +15,23 @@ drawCanvas.pack(anchor='nw', expand=1, fill='both')
 
 points = []
 # To store the points while drag (Useful for next part)
-def markPoints(array, event):
-    print(event, end="")
-    points.append(event.x, event.y)
-    print(array)
-    return
-
-# To draw line between points
-def drawLine():
+def markPoints(event):
+    print(event.x, event.y)
+    global x, y
+    x = event.x
+    y = event.y
     
-    return
+    
+# To draw line between points
+def drawLine(event):
+    global x, y
+    drawCanvas.create_line((x, y, event.x, event.y), fill="black")
+    x = event.x
+    y = event.y
 
-drawCanvas.bind('<Button-1>', markPoints, points)
+drawCanvas.bind("<Button-1>", markPoints)
+drawCanvas.bind("<B1-Motion>", drawLine)
+# print(points)
 # Put the Tkinter App in loop so it keeps running until terminated explicitly using Ctrl+C
 main.mainloop()
 
