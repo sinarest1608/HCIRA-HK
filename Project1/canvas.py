@@ -132,6 +132,48 @@ def rotateBy(points, theta):
     return newPoints
 
 
+#Scale
+# def Reactangle(self, x, y, width, height):
+#     self.X = x
+#     self.Y = y
+#     self.Width = width
+#     self.Height = height
+
+def boundingBox(points):
+    minX = math.inf
+    maxX = -math.inf
+    minY = math.inf
+    minX = -math.inf
+    for i in range(0, len(points)):
+        minX = min(minX, points[i][0])
+        maxX = max(maxX, points[i][0])
+        minY = min(minY, points[i][1])
+        maxY = max(maxY, points[i][1])
+    return [minX, minY, maxX-minX, maxY-minY]
+
+# for reactangle
+# [0] = x
+# [1] = y
+# [2] = width
+# [3] = height
+
+def scaleTo(points, size):
+    b = boundingBox(points)
+    newPoints = []
+    for i in range(0, len(points)):
+        qx = points[i][0] * (size/b[2])
+        qy = points[i][1] * (size/b[3])
+        newPoints.append([qx, qy]) 
+    return newPoints
+
+def translateTo(points):
+    c = Centroid(points)
+    newPoints = []
+    for i in range(0, len(points)):
+        qx = points[i][0] - c[0]
+        qy = points[i][1] - c[1]
+        newPoints.append([qx, qy])
+    return newPoints
 
 # Put the Tkinter App in loop so it keeps running until terminated explicitly using Ctrl+C
 main.mainloop()
