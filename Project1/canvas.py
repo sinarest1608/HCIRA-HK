@@ -104,10 +104,33 @@ def resample(points, n):
 
 #rotation
 def Centroid(points):
-    pass
+    x = 0.0
+    y = 0.0
+    for i in range(0, len(points)):
+        x = x + points[i][0]
+        y = y + points[i][1]
+    
+    x = x/len(points)
+    y = y/len(points)
+
+    return [x, y]
 
 def rotate_to_zero(points):
     c = Centroid(points)
+    theta = math.atan2(c[1] - points[0][1], c[0] - points[0][0])
+    return theta
+
+def rotateBy(points, theta):
+    c = Centroid(points)
+    cos = math.cos(theta)
+    sin = math.sin(theta)
+    newPoints = []
+    for i in range(0, len(points)):
+        qx = (points[i][0] - c[0])*cos - (points[i][1] - c[1])*sin + c[0]
+        qy = (points[i][0] - c[0])*sin + (points[i][1] - c[1]) *cos + c[1]
+        newPoints.append([qx, qy])
+    return newPoints
+
 
 
 # Put the Tkinter App in loop so it keeps running until terminated explicitly using Ctrl+C
