@@ -1,4 +1,5 @@
 import tkinter
+import math
 
 ## Part a:
 # Create A Tkinter App
@@ -61,6 +62,53 @@ clearScreenButton = tkinter.Button(main, text = 'Clear Canvas', bd = '7', comman
 
 # Placing the button at the very bottom of the window
 clearScreenButton.pack(side = 'bottom')
+
+#resampling
+def distance(p1, p2):
+    dx = p2[0] - p1[0]
+    dy = p2[1] - p1[1]
+    dx = pow(dx, 2)
+    dy = pow(dy, 2)
+    return math.sqrt(dx + dy)
+
+
+def path_length(A):
+    d = 0.0
+    for i in range(1, len(A)):
+        d = d + distance(A[i-1], A[i])
+    return d
+
+
+def resample(points, n):
+    I = path_length(points)/n
+    D = 0.0
+    newPoints = []
+    newPoints.append(points[0])
+    for i in range(1, len(points)):
+        d = distance(points[i-1], points[i])
+        if((d + D) >= I):
+            qx = points[i-1][0] + ((I - D)/d) * (points[i][0] - points[i-1][0])
+            qy = points[i-1][1] + ((I - D)/d) * (points[i][1] - points[i-1][1])
+            q = [[qx, qy]]
+            newPoints.append(q)
+            points = points[:i] + q + points[i:]
+            D = 0.0
+        else:
+            D = D + D
+
+    if(len(newPoints) == n-1):
+        newPoints.append([points[len(points)-1][0], points[len(points)-1][1]]) 
+
+    return newPoints
+
+
+#rotation
+def Centroid(points):
+    pass
+
+def rotate_to_zero(points):
+    c = Centroid(points)
+
 
 # Put the Tkinter App in loop so it keeps running until terminated explicitly using Ctrl+C
 main.mainloop()
