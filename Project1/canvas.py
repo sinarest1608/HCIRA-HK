@@ -2,14 +2,14 @@ import tkinter
 import math
 import template
 
-## Part a:
+## Part 1a:
 # Create A Tkinter App
 main = tkinter.Tk()
 
 # Define size of Window
 main.geometry("500x500")
 
-## Part b:                       
+## Part 1b:                       
 # Define Canvas Object with a white background
 drawCanvas = tkinter.Canvas(main, bg='white')
 
@@ -20,7 +20,7 @@ drawCanvas.pack(anchor='nw', expand=1, fill='both')
 # To store the points while drag (Useful for next part)
 points = []
 
-## Part c:
+## Part 1c & Part 2a:
 # This helps us register the mouse click and store the pointer co-ordinates. We use event here as a parameter.
 def mouseDown(event):
     clearScreen()
@@ -54,7 +54,7 @@ drawCanvas.bind("<Button-1>", mouseDown)
 drawCanvas.bind("<B1-Motion>", mouseDrag)
 drawCanvas.bind("<ButtonRelease-1>", mouseUp)
 
-## Part d: 
+## Part 1d: 
 def clearScreen():
     drawCanvas.delete('all')
     
@@ -63,6 +63,66 @@ clearScreenButton = tkinter.Button(main, text = 'Clear Canvas', bd = '7', comman
 
 # Placing the button at the very bottom of the window
 clearScreenButton.pack(side = 'bottom')
+
+#<------------------------Part 2------------------------>
+
+#point class
+class Point:
+    def __init__(self, x, y):
+        self.X = x
+        self.Y = y
+
+#rectangle class
+class Rectangle:
+    def __init__(self, x, y, width, height):
+        self.X = x
+        self.Y = y
+        self.Width = width
+        self.Height = height
+
+#unistroke class
+class Unistroke:
+    def __init__(self, name, points):
+        self.Name = name
+        self.Points = resample(points, NumPoints)
+        radians = indicativeAngle(self.Points)
+        self.Points = rotateBy(self.Points, radians)
+        self.Points = scaleTo(self.Points, SquareSize)
+        self.Points = translateTo(self.Points, Origin)
+
+#result class
+class Result:
+    def __init__(self, name, score, ms) -> None:
+        self.Name = name
+        self.Score = score
+        self.Time = ms
+
+NumUnistrokes = 16
+NumPoints = 64
+SquareSize = 250.0
+Origin = Point(0,0)
+Diagonal = math.sqrt(SquareSize * SquareSize + SquareSize * SquareSize)
+HalfDiagonal = 0.5 * Diagonal
+AngleRange = math.Deg2Rad(45.0)
+AnglePrecision = math.Deg2Rad(2.0)
+Phi = 0.5 * (-1.0 + math.sqrt(5.0))
+
+#dollar recognizer
+class DollarRecognizer:
+    def __init__(self):
+        self.Unistrokes = []
+        self.Unistrokes[0] = Unistroke("triangle", [Point(137,139), Point(135,141), Point(133,144), Point(132,146), Point(130,149),
+         Point(128,151), Point(126,155), Point(123,160), Point(120,166), Point(116,171), Point(112,177), Point(107,183),
+         Point(102,188), Point(100,191), Point(95,195), Point(90,199), Point(86,203), Point(82,206), Point(80,209),
+         Point(75,213), Point(73,213), Point(70,216), Point(67,219), Point(64,221), Point(61,223), Point(60,225),
+         Point(62,226), Point(65,225), Point(67,226), Point(74,226), Point(77,227), Point(85,229), Point(91,230),
+         Point(99,231), Point(108,232), Point(116,233), Point(125,233), Point(134,234), Point(145,233), Point(153,232),
+         Point(160,233), Point(170,234), Point(177,235), Point(179,236), Point(186,237), Point(193,238), Point(198,239),
+         Point(200,237), Point(202,239), Point(204,238), Point(206,234), Point(205,230), Point(202,222), Point(197,216),
+         Point(192,207), Point(186,198), Point(179,189), Point(174,183), Point(170,178), Point(164,171), Point(161,168),
+         Point(154,160), Point(148,155), Point(143,150), Point(138,148), Point(136,148)])
+
+         
 
 #resampling
 def distance(p1, p2):
@@ -83,24 +143,24 @@ def path_length(A):
 def resample(points, n):
     I = path_length(points)/n
     D = 0.0
-    newPoints = []
-    newPoints.append(points[0])
+    Points = []
+    Points.append(points[0])
     for i in range(1, len(points)):
         d = distance(points[i-1], points[i])
         if((d + D) >= I):
             qx = points[i-1][0] + ((I - D)/d) * (points[i][0] - points[i-1][0])
             qy = points[i-1][1] + ((I - D)/d) * (points[i][1] - points[i-1][1])
             q = [[qx, qy]]
-            newPoints.append(q)
+            Points.append(q)
             points = points[:i] + q + points[i:]
             D = 0.0
         else:
             D = D + D
 
-    if(len(newPoints) == n-1):
-        newPoints.append([points[len(points)-1][0], points[len(points)-1][1]]) 
+    if(len(Points) == n-1):
+        Points.append([points[len(points)-1][0], points[len(points)-1][1]]) 
 
-    return newPoints
+    return Points
 
 
 #rotation
@@ -116,7 +176,7 @@ def Centroid(points):
 
     return [x, y]
 
-def rotate_to_zero(points):
+def indicativeAngle(points):
     c = Centroid(points)
     theta = math.atan2(c[1] - points[0][1], c[0] - points[0][0])
     return theta
@@ -125,12 +185,12 @@ def rotateBy(points, theta):
     c = Centroid(points)
     cos = math.cos(theta)
     sin = math.sin(theta)
-    newPoints = []
+    Points = []
     for i in range(0, len(points)):
         qx = (points[i][0] - c[0])*cos - (points[i][1] - c[1])*sin + c[0]
         qy = (points[i][0] - c[0])*sin + (points[i][1] - c[1]) *cos + c[1]
-        newPoints.append([qx, qy])
-    return newPoints
+        Points.append([qx, qy])
+    return Points
 
 
 #Scale
@@ -160,21 +220,21 @@ def boundingBox(points):
 
 def scaleTo(points, size):
     b = boundingBox(points)
-    newPoints = []
+    Points = []
     for i in range(0, len(points)):
         qx = points[i][0] * (size/b[2])
         qy = points[i][1] * (size/b[3])
-        newPoints.append([qx, qy]) 
-    return newPoints
+        Points.append([qx, qy]) 
+    return Points
 
 def translateTo(points):
     c = Centroid(points)
-    newPoints = []
+    Points = []
     for i in range(0, len(points)):
         qx = points[i][0] - c[0]
         qy = points[i][1] - c[1]
-        newPoints.append([qx, qy])
-    return newPoints
+        Points.append([qx, qy])
+    return Points
 
 def recognize(points, templates, size):
     
@@ -217,8 +277,8 @@ def distanceAtBestAngle(points, T, thetaA, thetaB, thetaD):
     return min(f1, f2)
 
 def distanceAtAngle(points, T, theta):
-    newPoints = rotateBy(points, theta)
-    d = pathDistance(newPoints, T)
+    Points = rotateBy(points, theta)
+    d = pathDistance(Points, T)
     return d
 
 def pathDistance(A, B):
