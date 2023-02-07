@@ -1,5 +1,6 @@
 import tkinter
 import math
+import template
 
 ## Part a:
 # Create A Tkinter App
@@ -175,6 +176,56 @@ def translateTo(points):
         newPoints.append([qx, qy])
     return newPoints
 
+def recognize(points, templates, size):
+    
+    # Represents Infinity
+    b = 100000000000000
+    
+    #TODO: Need to see if Degree to Radians conversion required
+    theta = 45
+    thetaD = 2
+    Tprime = []
+    for T in templates:
+        d = distanceAtBestAngle(points, T, -1*theta, theta, thetaD)  
+        if d < b:
+            b = d
+            Tprime = T
+    sizePrime = math.sqrt(2*size*size)
+    score = 1 - (b/(0.5*sizePrime))
+    return [Tprime, score]
+
+def distanceAtBestAngle(points, T, thetaA, thetaB, thetaD):
+    phi = (math.sqrt(5) - 1)/2
+    x1 = phi*thetaA + (1 - phi)*thetaB
+    f1 = distanceAtAngle(points, T, x1)
+    x2 = (1 - phi)*thetaA + phi*thetaB
+    f2 = distanceAtAngle(points, T, x2)
+    
+    while abs(thetaB - thetaA) > thetaD:
+        if f1 < f2:
+            thetaB = x2
+            x2 = x1
+            f2 = f1
+            x1 = phi*thetaA + (1 - phi)*thetaB
+            f1 = distanceAtAngle(points, T, x1)
+        else:
+            thetaA = x1
+            x1 = x2
+            f1 = f2
+            x2 = (1 - phi)*thetaA + phi*thetaB 
+            f2 = distanceAtAngle(points, T, x2)
+    return min(f1, f2)
+
+def distanceAtAngle(points, T, theta):
+    newPoints = rotateBy(points, theta)
+    d = pathDistance(newPoints, T)
+    return d
+
+def pathDistance(A, B):
+    d = 0
+    for i in range(0, len(A)):
+        d += distance(A[i], B[i])
+    return d/len(A)
 # Put the Tkinter App in loop so it keeps running until terminated explicitly using Ctrl+C
 main.mainloop()
 
