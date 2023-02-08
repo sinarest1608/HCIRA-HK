@@ -26,6 +26,7 @@ points = []
 
 def mouseDown(event):
     clearScreen()
+    obj1 = DollarRecognizer()
     # print("mouseDown")
     # print(event.x, event.y)
     global x, y
@@ -75,16 +76,12 @@ clearScreenButton.pack(side='bottom')
 # <------------------------Part 2------------------------>
 
 # point class
-
-
 class Point:
     def __init__(self, x, y):
         self.X = x
         self.Y = y
 
 # rectangle class
-
-
 class Rectangle:
     def __init__(self, x, y, width, height):
         self.X = x
@@ -93,23 +90,28 @@ class Rectangle:
         self.Height = height
 
 # unistroke class
-
-
 class Unistroke:
     def __init__(self, name, points):
+        # print(len(points))
+        # for i in range(1, len(points)):
+        #     drawCanvas.create_oval((points[i-1].X, points[i-1].Y, points[i].X, points[i].Y), fill="red")
         self.Name = name
-        self.Points = resample(points, NumPoints)
+        self.Points = resample(points, 64)
+        # print(len(self.Points))
+        # for i in range(1, len(self.Points)):
+        #     drawCanvas.create_oval((self.Points[i-1].X+100, self.Points[i-1].Y+100, self.Points[i].X+100, self.Points[i].Y+100),width= 1,fill="green")
         # print("line 102 ", self.Points)
         radians = indicativeAngle(self.Points)
         self.Points = rotateBy(self.Points, radians)
+        # for i in range(1, len(self.Points)):
+        #     drawCanvas.create_line((self.Points[i-1].X+200, self.Points[i-1].Y+200, self.Points[i].X+200, self.Points[i].Y+200), fill="black")
         self.Points = scaleTo(self.Points, SquareSize)
         self.Points = translateTo(self.Points, Origin)
+        
 
 # result class
-
-
 class Result:
-    def __init__(self, name, score, ms) -> None:
+    def __init__(self, name, score, ms):
         self.Name = name
         self.Score = score
         self.Time = ms
@@ -129,8 +131,6 @@ AnglePrecision = Deg2Rad(2.0)
 Phi = 0.5 * (-1.0 + math.sqrt(5.0))
 
 # dollar recognizer
-
-
 class DollarRecognizer():
     def __init__(self):
         self.Unistrokes = [0] * 16
@@ -181,24 +181,6 @@ class DollarRecognizer():
         
         self.Unistrokes[15] = Unistroke("pigtail",   [Point(81, 219), Point(84, 218), Point(86, 220), Point(88, 220), Point(90, 220), Point(92, 219), Point(95, 220), Point(97, 219), Point(99, 220), Point(102, 218), Point(105, 217), Point(107, 216), Point(110, 216), Point(113, 214), Point(116, 212), Point(118, 210), Point(121, 208), Point(124, 205), Point(126, 202), Point(129, 199), Point(132, 196), Point(136, 191), Point(139, 187), Point(142, 182), Point(144, 179), Point(146, 174), Point(148, 170), Point(149, 168), Point(151, 162), Point(152, 160), Point(152, 157), Point(
             152, 155), Point(152, 151), Point(152, 149), Point(152, 146), Point(149, 142), Point(148, 139), Point(145, 137), Point(141, 135), Point(139, 135), Point(134, 136), Point(130, 140), Point(128, 142), Point(126, 145), Point(122, 150), Point(119, 158), Point(117, 163), Point(115, 170), Point(114, 175), Point(117, 184), Point(120, 190), Point(125, 199), Point(129, 203), Point(133, 208), Point(138, 213), Point(145, 215), Point(155, 218), Point(164, 219), Point(166, 219), Point(177, 219), Point(182, 218), Point(192, 216), Point(196, 213), Point(199, 212), Point(201, 211)])
-        
-        # def recognize(self, points):
-        #     t0 = datetime.now()
-        #     candidate = Unistroke("", points)
-        #     u = -1
-        #     b = math.inf
-        #     for i in range(0, len(self.Unistrokes)):
-        #         d = distanceAtBestAngle(candidate.Points, self.Unistrokes[i], -AngleRange, +AngleRange, AnglePrecision)
-        #         if(d > b):
-        #             b = d
-        #             u = i
-        #     t1 = datetime.now()
-        #     if(u == -1):
-        #         return Result("No Match", 0.0, t1-t0)
-        #     else:
-        #         return Result(self.Unistrokes[u].Name, (1.0-b/HalfDiagonal), t1-t0)
-    
-        # self.Recognize = recognize(points)
 
 # resampling
 def distance(p1, p2):
@@ -212,30 +194,34 @@ def distance(p1, p2):
 def path_length(A):
     d = 0.0
     for i in range(1, len(A)):
-        d = d + distance(A[i-1], A[i])
+        d = d + math.dist([A[i-1].X, A[i-1].Y], [A[i].X, A[i].Y])
     return d
 
 
 def resample(points, n):
     I = path_length(points)/(n-1)
+    # print(path_length(points))
+    # print(I)
     D = 0.0
     newPoints = []
     newPoints.append(Point(points[0].X, points[0].Y))
-    for i in range(1, len(points)):
-        d = distance(points[i-1], points[i])
+    lenPoints = len(points)
+    i=1
+    while i < lenPoints:
+        # print("n", len(newPoints))
+        # print("p", len(points))
+        d = math.dist([points[i-1].X, points[i-1].Y], [points[i].X, points[i].Y])
         if ((d + D) >= I):
             qx = points[i-1].X + ((I - D)/d) * (points[i].X - points[i-1].X)
             qy = points[i-1].Y + ((I - D)/d) * (points[i].Y - points[i-1].Y)
             q = Point(qx, qy)
             newPoints.append(q)
-            points.insert(i, q) #check this formula
+            points.insert(i, q) 
+            lenPoints = len(points)
             D = 0.0
         else:
             D = D + d
-
-    if (len(newPoints) == n-1):
-        newPoints.append(Point(points[len(points)-1].X, points[len(points)-1].Y))
-
+        i=i+1
     return newPoints
 
 
@@ -265,6 +251,11 @@ def indicativeAngle(points):
     theta = math.atan2(c.Y - points[0].Y, c.X - points[0].X)
     return theta
 
+def rotateToZero(points):
+    c = Centroid(points)
+    theta = math.atan(c.Y - points[0].Y, c.X - points[0].X)
+    newPoints = rotateBy(points, -theta)
+    return newPoints
 
 def rotateBy(points, theta):
     c = Centroid(points)
@@ -279,7 +270,6 @@ def rotateBy(points, theta):
 
 
 # Scale
-
 def boundingBox(points):
     minX = math.inf
     maxX = -math.inf
@@ -335,8 +325,8 @@ def distanceAtBestAngle(points, T, thetaA, thetaB, thetaD):
 
 def distanceAtAngle(points, T, theta):
     newPoints = rotateBy(points, theta)
-    print("line 338 ", len(points))
-    print("line 339 ", len(T.Points))
+    # print("line 338 ", len(points))
+    # print("line 339 ", len(T.Points))
     d = pathDistance(newPoints, T.Points)
     return d
 
@@ -369,6 +359,3 @@ print("init")
 
 # Put the Tkinter App in loop so it keeps running until terminated explicitly using Ctrl+C
 main.mainloop()
-
-obj1 = DollarRecognizer()
-print(recognize(points, obj1.Unistrokes, 64))
