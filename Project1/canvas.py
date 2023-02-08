@@ -1,6 +1,7 @@
 import tkinter
 import math
 from datetime import datetime
+import time
 
 # Part 1a:
 # Create A Tkinter App
@@ -25,6 +26,8 @@ points = []
 
 
 def mouseDown(event):
+    global points
+    points = []
     clearScreen()
     obj1 = DollarRecognizer()
     # print("mouseDown")
@@ -51,6 +54,9 @@ def mouseUp(event):
     global x, y
     x = event.x
     y = event.y
+    # Unistroke(points=points, name="")
+    resName = recognize(points=points, templates=DollarRecognizer().Unistrokes, size=SquareSize)
+    print(resName[0].Name, resName[1], resName[2])
     # print(points)
 
 
@@ -284,6 +290,7 @@ def boundingBox(points):
 
 def scaleTo(points, size):
     b = boundingBox(points)
+    # print("b ", b.X, b.Y, b.Width, b.Height)
     newPoints = []
     for i in range(0, len(points)):
         qx = points[i].X * (size/b.Width)
@@ -338,22 +345,28 @@ def pathDistance(A, B):
     return d/len(A)
 
 def recognize(points, templates, size):
-
+    s = time.time()
+    # print("Points passed in recognise, ", points)
     # Represents Infinity
-    b = 100000000000000
+    b = math.inf
 
-    # TODO: Need to see if Degree to Radians conversion required
-    theta = 45
-    thetaD = 2
+    
+    theta = Deg2Rad(45)
+    thetaD = Deg2Rad(2)
     Tprime = []
     for T in templates:
+        print("T len ", len(T.Points))
+        print("points Le, ", len(points))
+        print("T ", T.Points)
         d = distanceAtBestAngle(points, T, -1*theta, theta, thetaD)
         if d < b:
             b = d
             Tprime = T
     sizePrime = math.sqrt(2*size*size)
     score = 1 - (b/(0.5*sizePrime))
-    return [Tprime, score]
+    
+    e = time.time()
+    return [Tprime, score, e-s]
 
 print("init")
 
