@@ -55,7 +55,12 @@ def mouseUp(event):
     x = event.x
     y = event.y
     # Unistroke(points=points, name="")
-    resName = recognize(points=points, templates=DollarRecognizer().Unistrokes, size=SquareSize)
+    Points = resample(points=points, n=64)
+    r = indicativeAngle(Points)
+    Points = rotateBy(Points, r)
+    Points = scaleTo(Points, SquareSize)
+    Points = translateTo(Points, Origin)
+    resName = recognize(points=Points, templates=DollarRecognizer().Unistrokes, size=SquareSize)
     print(resName[0].Name, resName[1], resName[2])
     # print(points)
 
@@ -353,17 +358,18 @@ def recognize(points, templates, size):
     
     theta = Deg2Rad(45)
     thetaD = Deg2Rad(2)
-    Tprime = []
+    Tprime = ""
     for T in templates:
-        print("T len ", len(T.Points))
-        print("points Le, ", len(points))
-        print("T ", T.Points)
+        # print("T len ", len(T.Points))
+        # print("points Le, ", len(points))
+        
         d = distanceAtBestAngle(points, T, -1*theta, theta, thetaD)
         if d < b:
             b = d
             Tprime = T
-    sizePrime = math.sqrt(2*size*size)
-    score = 1 - (b/(0.5*sizePrime))
+        print("T ", T.Name, " TPrime ", Tprime.Name)
+    # sizePrime = math.sqrt(2*size*size)
+    score = 1 - (b/(0.5*(math.sqrt(size**2 + size**2))))
     
     e = time.time()
     return [Tprime, score, e-s]
