@@ -2,6 +2,7 @@ import tkinter
 import math
 from datetime import datetime
 import time
+from tkinter import messagebox
 
 # Part 1a:
 # Create A Tkinter App
@@ -28,13 +29,14 @@ points = []
 def mouseDown(event):
     global points
     points = []
-    clearScreen()
+    # clearScreen()
     obj1 = DollarRecognizer()
     # print("mouseDown")
     # print(event.x, event.y)
     global x, y
     x = event.x
     y = event.y
+    points.append(Point(x, y))
 
 
 # This helps us draw a line betweem current and previous point. We use event here as a parameter.
@@ -55,13 +57,6 @@ def mouseUp(event):
     x = event.x
     y = event.y
     # Unistroke(points=points, name="")
-    Points = resample(points=points, n=64)
-    r = indicativeAngle(Points)
-    Points = rotateBy(Points, r)
-    Points = scaleTo(Points, SquareSize)
-    Points = translateTo(Points, Origin)
-    resName = recognize(points=Points, templates=DollarRecognizer().Unistrokes, size=SquareSize)
-    print(resName[0].Name, resName[1], resName[2])
     # print(points)
 
 
@@ -82,7 +77,7 @@ clearScreenButton = tkinter.Button(
     main, text='Clear Canvas', bd='7', command=clearScreen)
 
 # Placing the button at the very bottom of the window
-clearScreenButton.pack(side='bottom')
+clearScreenButton.pack(side='left')
 
 # <------------------------Part 2------------------------>
 
@@ -233,6 +228,9 @@ def resample(points, n):
         else:
             D = D + d
         i=i+1
+    if(len(newPoints) == n-1):
+        q = Point(points[len(points)-1].X, points[len(points)-1].Y)
+        newPoints.append(q)
     return newPoints
 
 
@@ -355,7 +353,6 @@ def recognize(points, templates, size):
     # Represents Infinity
     b = math.inf
 
-    
     theta = Deg2Rad(45)
     thetaD = Deg2Rad(2)
     Tprime = ""
@@ -374,7 +371,26 @@ def recognize(points, templates, size):
     e = time.time()
     return [Tprime, score, e-s]
 
-print("init")
+def displayResult(template, score, timeTaken):
+    messagebox.showinfo("Result", "Result: " + template + " \nScore: " + str(score))
+
+def result():
+    Points = resample(points=points, n=64)
+    print("points ",len(Points))
+    r = indicativeAngle(Points)
+    Points = rotateBy(Points, r)
+    Points = scaleTo(Points, SquareSize)
+    Points = translateTo(Points, Origin)
+    print("points ",len(Points))
+    resName = recognize(points=Points, templates=DollarRecognizer().Unistrokes, size=SquareSize)
+    print("line 386 ", resName[0].Name, resName[1], resName[2])
+    displayResult(resName[0].Name, resName[1], resName[2])
+
+recognizeScreenButton = tkinter.Button(
+    main, text='Recognize Gesture', bd='7', command=result)
+
+# Placing the button at the very bottom of the window
+recognizeScreenButton.pack(side='left')
 
 # Put the Tkinter App in loop so it keeps running until terminated explicitly using Ctrl+C
 main.mainloop()
