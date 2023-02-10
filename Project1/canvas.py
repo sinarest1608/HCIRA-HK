@@ -29,7 +29,7 @@ points = []
 def mouseDown(event):
     global points
     points = []
-    # clearScreen()
+    clearScreen()
     obj1 = DollarRecognizer()
     # print("mouseDown")
     # print(event.x, event.y)
@@ -368,11 +368,12 @@ def recognize(points, templates, size):
     # sizePrime = math.sqrt(2*size*size)
     score = 1 - (b/(0.5*(math.sqrt(size**2 + size**2))))
     
-    e = time.time()
-    return [Tprime, score, e-s]
+    e =  time.time()
+    executionTime = e-s
+    return [Tprime, score, executionTime*1000]
 
 def displayResult(template, score, timeTaken):
-    messagebox.showinfo("Result", "Result: " + template + " \nScore: " + str(score))
+    messagebox.showinfo("Result", "Result: " + template + " \nScore: " + str(round(score*100)) + "\n Time take: "+str(round(timeTaken)) + "ms")
 
 def result():
     Points = resample(points=points, n=64)
