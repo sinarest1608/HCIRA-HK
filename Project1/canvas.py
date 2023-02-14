@@ -81,13 +81,13 @@ clearScreenButton.pack(side='left')
 
 # <------------------------Part 2------------------------>
 
-# point class
+# Point class to standardize points capturing, processing and result output
 class Point:
     def __init__(self, x, y):
         self.X = x
         self.Y = y
 
-# rectangle class
+# Rectangle class for Bounding box
 class Rectangle:
     def __init__(self, x, y, width, height):
         self.X = x
@@ -95,7 +95,7 @@ class Rectangle:
         self.Width = width
         self.Height = height
 
-# unistroke class
+# The unistroke class to store and preprocess templates upon initialisation
 class Unistroke:
     def __init__(self, name, points):
         # print(len(points))
@@ -115,17 +115,20 @@ class Unistroke:
         self.Points = translateTo(self.Points, Origin)
         
 
-# result class
+# Result Class to display result in a systematic form with recognised template, Score and Time taken
 class Result:
     def __init__(self, name, score, ms):
         self.Name = name
         self.Score = score
         self.Time = ms
 
+# Function to convert angles from Degree to Radian
 def Deg2Rad(d):
     d2r = d*math.pi / 180.0
     return d2r
 
+
+# All the required constants declared as variables. 
 NumUnistrokes = 16
 NumPoints = 64
 SquareSize = 250.0
@@ -136,7 +139,7 @@ AngleRange = Deg2Rad(45.0)
 AnglePrecision = Deg2Rad(2.0)
 Phi = 0.5 * (-1.0 + math.sqrt(5.0))
 
-# dollar recognizer
+# The template class. Each template has been made into Unistroke object with each co-ordinate as object for the Point class. 
 class DollarRecognizer():
     def __init__(self):
         self.Unistrokes = [0] * 16
@@ -188,7 +191,9 @@ class DollarRecognizer():
         self.Unistrokes[15] = Unistroke("pigtail",   [Point(81, 219), Point(84, 218), Point(86, 220), Point(88, 220), Point(90, 220), Point(92, 219), Point(95, 220), Point(97, 219), Point(99, 220), Point(102, 218), Point(105, 217), Point(107, 216), Point(110, 216), Point(113, 214), Point(116, 212), Point(118, 210), Point(121, 208), Point(124, 205), Point(126, 202), Point(129, 199), Point(132, 196), Point(136, 191), Point(139, 187), Point(142, 182), Point(144, 179), Point(146, 174), Point(148, 170), Point(149, 168), Point(151, 162), Point(152, 160), Point(152, 157), Point(
             152, 155), Point(152, 151), Point(152, 149), Point(152, 146), Point(149, 142), Point(148, 139), Point(145, 137), Point(141, 135), Point(139, 135), Point(134, 136), Point(130, 140), Point(128, 142), Point(126, 145), Point(122, 150), Point(119, 158), Point(117, 163), Point(115, 170), Point(114, 175), Point(117, 184), Point(120, 190), Point(125, 199), Point(129, 203), Point(133, 208), Point(138, 213), Point(145, 215), Point(155, 218), Point(164, 219), Point(166, 219), Point(177, 219), Point(182, 218), Point(192, 216), Point(196, 213), Point(199, 212), Point(201, 211)])
 
-# resampling
+# --- Step 1: Resampling begins ---
+
+# Simple Eucledian distance calculation
 def distance(p1, p2):
     dx = p2.X - p1.X
     dy = p2.Y - p1.Y
@@ -196,14 +201,14 @@ def distance(p1, p2):
     dy = pow(dy, 2)
     return math.sqrt(dx + dy)
 
-
+# Path length calculation 
 def path_length(A):
     d = 0.0
     for i in range(1, len(A)):
         d = d + math.dist([A[i-1].X, A[i-1].Y], [A[i].X, A[i].Y])
     return d
 
-
+# The resampling function according to the pseudocode defined in the paper
 def resample(points, n):
     I = path_length(points)/(n-1)
     # print(path_length(points))
@@ -234,7 +239,9 @@ def resample(points, n):
     return newPoints
 
 
-# rotation
+# --- Step 2: Rotation ---
+
+# Calculation of the Centroid 
 def Centroid(points):
     x = 0.0
     y = 0.0
@@ -251,7 +258,7 @@ def Centroid(points):
 
     return Point(x, y)
 
-
+# Calculating Indicative Angle
 def indicativeAngle(points):
     # print("line 258", type(points))
     # print("line 259 ", points[0])
@@ -260,12 +267,14 @@ def indicativeAngle(points):
     theta = math.atan2(c.Y - points[0].Y, c.X - points[0].X)
     return theta
 
+# The rotate to 0,0 function
 def rotateToZero(points):
     c = Centroid(points)
     theta = math.atan(c.Y - points[0].Y, c.X - points[0].X)
     newPoints = rotateBy(points, -theta)
     return newPoints
 
+# The function used to rotate the gesture by the angle provided
 def rotateBy(points, theta):
     c = Centroid(points)
     cos = math.cos(theta)
@@ -278,7 +287,7 @@ def rotateBy(points, theta):
     return newPoints
 
 
-# Scale
+# Creating the bounding box that returns as rectangle as the oject of the Rectangle class
 def boundingBox(points):
     minX = math.inf
     maxX = -math.inf
@@ -291,6 +300,7 @@ def boundingBox(points):
         maxY = max(maxY, points[i].Y)
     return Rectangle(minX, minY, maxX-minX, maxY-minY)
 
+# --- Step 3: Scaling & Translating --- 
 def scaleTo(points, size):
     b = boundingBox(points)
     # print("b ", b.X, b.Y, b.Width, b.Height)
@@ -310,6 +320,9 @@ def translateTo(points, pt):
         newPoints.append(Point(qx, qy))
     return newPoints
 
+# --- Step 4: Recognize ---
+
+# Calculating the distance at best angle 
 def distanceAtBestAngle(points, T, thetaA, thetaB, thetaD):
     phi = (math.sqrt(5) - 1)/2
     x1 = phi*thetaA + (1 - phi)*thetaB
@@ -332,7 +345,7 @@ def distanceAtBestAngle(points, T, thetaA, thetaB, thetaD):
             f2 = distanceAtAngle(points, T, x2)
     return min(f1, f2)
 
-
+# Calculating Distance at a particular angle
 def distanceAtAngle(points, T, theta):
     newPoints = rotateBy(points, theta)
     # print("line 338 ", len(points))
@@ -340,13 +353,14 @@ def distanceAtAngle(points, T, theta):
     d = pathDistance(newPoints, T.Points)
     return d
 
-
+# Calculating Path distance using the Eucledian distance function defined previously.
 def pathDistance(A, B):
     d = 0
     for i in range(0, len(A)):
         d += distance(A[i], B[i])
     return d/len(A)
 
+# The actual recognize function
 def recognize(points, templates, size):
     s = time.time()
     # print("Points passed in recognise, ", points)
@@ -372,9 +386,11 @@ def recognize(points, templates, size):
     executionTime = e-s
     return [Tprime, score, executionTime*1000]
 
+# Displaying the result on button click using an information box
 def displayResult(template, score, timeTaken):
     messagebox.showinfo("Result", "Result: " + template + " \nScore: " + str(round(score*100)) + "\n Time take: "+str(round(timeTaken)) + "ms")
 
+# Calcualting the result and identifying gesture. This function is called on the "Recognize" function and returns the result to the displayResult function
 def result():
     Points = resample(points=points, n=64)
     print("points ",len(Points))
@@ -387,6 +403,7 @@ def result():
     print("line 386 ", resName[0].Name, resName[1], resName[2])
     displayResult(resName[0].Name, resName[1], resName[2])
 
+# Defining a recognize button for the window
 recognizeScreenButton = tkinter.Button(
     main, text='Recognize Gesture', bd='7', command=result)
 
