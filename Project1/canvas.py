@@ -29,6 +29,11 @@ points = []
 # Part 1c & Part 2a:
 # This helps us register the mouse click and store the pointer co-ordinates. We use event here as a parameter.
 
+# Point class to standardize points capturing, processing and result output
+class Point:
+    def __init__(self, x, y):
+        self.X = x
+        self.Y = y
 
 def mouseDown(event):
     global points
@@ -60,6 +65,7 @@ def mouseUp(event):
     global x, y
     x = event.x
     y = event.y
+    points.append(Point(x, y))
     # Unistroke(points=points, name="")
     # print(points)
 
@@ -84,12 +90,6 @@ clearScreenButton = tkinter.Button(
 clearScreenButton.pack(side='left')
 
 # <------------------------Part 2------------------------>
-
-# Point class to standardize points capturing, processing and result output
-class Point:
-    def __init__(self, x, y):
-        self.X = x
-        self.Y = y
 
 # Rectangle class for Bounding box
 class Rectangle:
