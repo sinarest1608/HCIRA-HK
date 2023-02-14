@@ -1,3 +1,7 @@
+## Group 18
+## Kshitij Sinha
+## Hritik Baweja
+
 import tkinter
 import math
 from datetime import datetime
