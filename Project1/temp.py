@@ -1,6 +1,11 @@
 import os
+from sys import platform
 import xml.etree.ElementTree as ET
-cwd = os.getcwd() + '\\' + 'xml' + '\\xml_logs'
+print(platform)
+if(platform == "darwin"):
+    cwd = os.getcwd() + "/xml/xml_logs"
+else:
+    cwd = os.getcwd() + '\\' + 'xml' + '\\xml_logs'
 
 class Point:
     def __init__(self, x, y):
@@ -10,13 +15,16 @@ class Point:
 
 for fileName in os.listdir(cwd):
     print("cwd ", cwd +'\\' + fileName)
-    userFolder = cwd + '\\' + fileName
+    if(platform == "darwin"):
+       userFolder = cwd + '/' + fileName 
+    else:
+        userFolder = cwd + '\\' + fileName
     for user in os.listdir(userFolder):
         print("user ", user)
-        speedFolder = userFolder + '\\' + user
+        speedFolder = userFolder + '/' + user if(platform == "darwin")  else userFolder + '\\' + user
         for speed in os.listdir(speedFolder):
             print("speed ", speed )
-            xmlFile = speedFolder + '\\' + speed
+            xmlFile = speedFolder + '/' + speed if(platform == "darwin")  else speedFolder + '\\' + speed
             tree = ET.parse(xmlFile)
             root = tree.getroot()
             name = root.attrib.get('Name')
