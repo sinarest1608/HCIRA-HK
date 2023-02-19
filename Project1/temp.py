@@ -55,3 +55,8 @@ for fileName in os.listdir(cwd):
             # print(numpts)
     
 print(*dataset, sep="\n")
+
+
+# Dataset is list of dictionaries
+# Dictionary has three keys : User, Gesture and Points 
+# Points are stored in the form of class objs and x, y coordinates can be accessed via obj.X and obj.Y
