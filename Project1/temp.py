@@ -5,25 +5,27 @@ print(platform)
 if(platform == "darwin"):
     cwd = os.getcwd() + "/xml/xml_logs"
 else:
-    cwd = os.getcwd() + '\\' + 'xml' + '\\xml_logs'
+    cwd = os.getcwd() + '\Project1' + '\\' + 'xml' + '\\xml_logs'
 
 class Point:
     def __init__(self, x, y):
         self.X = x
         self.Y = y
 
+dataset = []
+
 
 for fileName in os.listdir(cwd):
-    print("cwd ", cwd +'\\' + fileName)
+    # print("cwd ", cwd +'\\' + fileName)
     if(platform == "darwin"):
        userFolder = cwd + '/' + fileName 
     else:
         userFolder = cwd + '\\' + fileName
     for user in os.listdir(userFolder):
-        print("user ", user)
+        # print("user ", user)
         speedFolder = userFolder + '/' + user if(platform == "darwin")  else userFolder + '\\' + user
         for speed in os.listdir(speedFolder):
-            print("speed ", speed )
+            # print("speed ", speed )
             xmlFile = speedFolder + '/' + speed if(platform == "darwin")  else speedFolder + '\\' + speed
             tree = ET.parse(xmlFile)
             root = tree.getroot()
@@ -33,16 +35,23 @@ for fileName in os.listdir(cwd):
             number = root.attrib.get('Number')
             numpts = root.attrib.get('NumPts')
             points = []
-
+            
             for i in range(0, len(root)):
                 x = root[i].attrib.get('X')
                 y = root[i].attrib.get('Y')
                 points.append(Point(x, y))
 
-            print("root " ,root)
-            print("attrib ", len(root))
-            print("find ", root.attrib.get('Name'))
-            print(len(points))
-            print(numpts)
-    
+            currSubject = {
+                "User" : subject,
+                "Gesture" : name[0:len(name)-2],
+                "Points" : points
+            }
 
+            dataset.append(currSubject)
+            # print("root " ,root)
+            # print("attrib ", len(root))
+            # print("find ", root.attrib.get('Name'))
+            # print(len(points))
+            # print(numpts)
+    
+print(*dataset, sep="\n")
