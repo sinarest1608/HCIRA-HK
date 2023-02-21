@@ -4,6 +4,7 @@ from sys import platform
 import xml.etree.ElementTree as ET
 from collections import OrderedDict
 import recognizer
+from random import choices
 
 print(platform)
 if(platform == "darwin"):
@@ -95,23 +96,46 @@ for fileName in os.listdir(cwd):
 #------------------------LOOPs---------------------------------------------#
 
 GestureType = ["triangle", "x", "rectangle", "circle", "check", "caret",
-                 "arrow", "left_sq_bracket", "right_sq_bracket", "v", "delete_mark", "left_curly_brace", "right_curly_brace", "star", "pigtail"]
+                 "arrow", "left_sq_bracket", "right_sq_bracket", "v", "delete_mark", "left_curly_brace", "right_curly_brace", "star", "pigtail", "question_mark"]
 
 # GestureType = ["triangle"]
 
 for U in dataDict.keys():
     for E in range(1, 10):
+        # print("E, ", E)
         # Add 1-100 loop
         TemplateSet = []
+        TempTest = []
+        TestSet = []
         for G in GestureType:
             PickGestureList = []
             for key in dataDict[U].keys():
                 if(G in key):
-                    print(dataDict[U][key][0].X)
+                    # print(dataDict[U][key][0].X)
                     PickGestureList.append(recognizer.Unistroke(name  = G, points =dataDict[U][key]))
+                    TempTest.append(dataDict[U][key])
+               
+            # pick gesture E times from pickgesturelist, pick T 1 time from same.     
+            for p in range(1, E+1):
+                # print("p ", p)
+                TemplateSet.append(choices(PickGestureList, k=1))
+            # TestSet.append(choices(PickGestureList, k=1))
+            TestSet.append(choices(TempTest, k=1))    
             
-            
-            
+        for T in TestSet:
+            print(T)
+            Points = recognizer.resample(points=T[0], n=64)
+            print("points ",len(Points))
+            r = recognizer.indicativeAngle(Points)
+            Points = recognizer.rotateBy(Points, r)
+            Points = recognizer.scaleTo(Points, recognizer.SquareSize)
+            Points = recognizer.translateTo(Points, recognizer.Origin)
+            print("points ",len(Points))
+            resName = recognizer.recognize(points=Points, templates=TemplateSet, size=recognizer.SquareSize)
+            print("line 132 ", resName[0].Name, resName[1], resName[2])
+            # displayResult(resName[0].Name, resName[1], resName[2])
+        # print(len(TestSet), len(TemplateSet))
+        
                 # else:
                 #     print(key)
             # if(dataDict[U].keys().contains(G)):
