@@ -82,8 +82,8 @@ for fileName in os.listdir(cwd):
         points = []
         # print("sbj, ", subject)
         for i in range(0, len(root)):
-            x = root[i].attrib.get('X')
-            y = root[i].attrib.get('Y')
+            x = int(root[i].attrib.get('X'))
+            y = int(root[i].attrib.get('Y'))
             points.append(Point(x, y))
       
         # gestureList.append({name : points})
@@ -102,6 +102,7 @@ GestureType = ["triangle", "x", "rectangle", "circle", "check", "caret",
 for U in dataDict.keys():
     for E in range(1, 10):
         # Add 1-100 loop
+        TemplateSet = []
         for G in GestureType:
             PickGestureList = []
             for key in dataDict[U].keys():
@@ -109,7 +110,8 @@ for U in dataDict.keys():
                     print(dataDict[U][key][0].X)
                     PickGestureList.append(recognizer.Unistroke(name  = G, points =dataDict[U][key]))
             
-            print( U,G,  PickGestureList[0][0])
+            
+            
                 # else:
                 #     print(key)
             # if(dataDict[U].keys().contains(G)):
