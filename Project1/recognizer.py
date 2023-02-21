@@ -300,7 +300,7 @@ def recognize(points, templates, size):
         if d < b:
             b = d
             Tprime = T
-        print("T ", T.Name, " TPrime ", Tprime.Name)
+        # print("T ", T.Name, " TPrime ", Tprime.Name)
     # sizePrime = math.sqrt(2*size*size)
     score = 1 - (b/(0.5*(math.sqrt(size**2 + size**2))))
     

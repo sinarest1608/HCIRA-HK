@@ -100,37 +100,48 @@ GestureType = ["triangle", "x", "rectangle", "circle", "check", "caret",
 
 # GestureType = ["triangle"]
 
-for U in dataDict.keys():
+for U in list(dataDict.keys())[0]:
+    print("U, ---------------", U)
     for E in range(1, 10):
-        # print("E, ", E)
+        print("E, ---------------", E)
         # Add 1-100 loop
         TemplateSet = []
-        TempTest = []
-        TestSet = []
+        TempTestPoints = []
+        TempTestLabels = []
+        TestSetPoints = []
+        TestSetLabels = []
         for G in GestureType:
             PickGestureList = []
             for key in dataDict[U].keys():
                 if(G in key):
                     # print(dataDict[U][key][0].X)
-                    PickGestureList.append(recognizer.Unistroke(name  = G, points =dataDict[U][key]))
-                    TempTest.append(dataDict[U][key])
+                    PickGestureList.append(recognizer.Unistroke(G,dataDict[U][key]))
+                    
+                    TempTestPoints.append(dataDict[U][key])
+                    TempTestLabels.append(G)
                
             # pick gesture E times from pickgesturelist, pick T 1 time from same.     
             for p in range(1, E+1):
                 # print("p ", p)
-                TemplateSet.append(choices(PickGestureList, k=1))
+                # Remove the ones choosen here from TempTest
+                temporary = choices(PickGestureList, k=1)
+                # print(Test[0].Name)
+                TemplateSet.append(temporary[0])
+            # print(TemplateSet[0][0].Name)
             # TestSet.append(choices(PickGestureList, k=1))
-            TestSet.append(choices(TempTest, k=1))    
+            temporary1 = choices(TempTestPoints, k=1)
+            # TestSetLabels.append(TemplateSet)
+            TestSetPoints.append(temporary1)    
             
-        for T in TestSet:
-            print(T)
+        for T in TestSetPoints:
+            # print("To be tested ",T[0])
             Points = recognizer.resample(points=T[0], n=64)
-            print("points ",len(Points))
+            # print("points ",len(Points))
             r = recognizer.indicativeAngle(Points)
             Points = recognizer.rotateBy(Points, r)
             Points = recognizer.scaleTo(Points, recognizer.SquareSize)
             Points = recognizer.translateTo(Points, recognizer.Origin)
-            print("points ",len(Points))
+            # print("points ",len(Points))
             resName = recognizer.recognize(points=Points, templates=TemplateSet, size=recognizer.SquareSize)
             print("line 132 ", resName[0].Name, resName[1], resName[2])
             # displayResult(resName[0].Name, resName[1], resName[2])
