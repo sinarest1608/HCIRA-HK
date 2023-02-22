@@ -12,10 +12,10 @@ if(platform == "darwin"):
 else:
     cwd = os.getcwd() + '\Project1' + '\\' + 'xml' + '\\xml_logs'
 
-class Point:
-    def __init__(self, x, y):
-        self.X = x
-        self.Y = y
+# class Point:
+#     def __init__(self, x, y):
+#         self.X = x
+#         self.Y = y
 
 dataset = []
 
@@ -85,7 +85,7 @@ for fileName in os.listdir(cwd):
         for i in range(0, len(root)):
             x = int(root[i].attrib.get('X'))
             y = int(root[i].attrib.get('Y'))
-            points.append(Point(x, y))
+            points.append(recognizer.Point(x, y))
       
         # gestureList.append({name : points})
         # gestureList = 
@@ -101,10 +101,12 @@ GestureType = ["triangle", "x", "rectangle", "circle", "check", "caret",
 # GestureType = ["triangle"]
 
 for U in list(dataDict.keys())[0]:
+    scoreList = []
     print("U, ---------------", U)
     for E in range(1, 10):
         print("E, ---------------", E)
         # Add 1-100 loop
+        recoScore = 0
         TemplateSet = []
         TempTestPoints = []
         TempTestLabels = []
@@ -118,7 +120,7 @@ for U in list(dataDict.keys())[0]:
                     PickGestureList.append(recognizer.Unistroke(G,dataDict[U][key]))
                     
                     TempTestPoints.append(dataDict[U][key])
-                    TempTestLabels.append(G)
+                    # TempTestLabels.append(G)
                
             # pick gesture E times from pickgesturelist, pick T 1 time from same.     
             for p in range(1, E+1):
@@ -130,7 +132,7 @@ for U in list(dataDict.keys())[0]:
             # print(TemplateSet[0][0].Name)
             # TestSet.append(choices(PickGestureList, k=1))
             temporary1 = choices(TempTestPoints, k=1)
-            # TestSetLabels.append(TemplateSet)
+            # TestSetLabels.append(TempTestLabels[TempTestPoints.index(temporary1[0])])
             TestSetPoints.append(temporary1)    
             
         for T in TestSetPoints:
@@ -143,7 +145,11 @@ for U in list(dataDict.keys())[0]:
             Points = recognizer.translateTo(Points, recognizer.Origin)
             # print("points ",len(Points))
             resName = recognizer.recognize(points=Points, templates=TemplateSet, size=recognizer.SquareSize)
-            print("line 132 ", resName[0].Name, resName[1], resName[2])
+            print("line 132 ",resName[0].Name, resName[1], resName[2])
+            if resName[0].Name == '''Add label name ''' :
+                recoScore += 1
+        scoreList.append(recoScore/100)
+    print("Avg Score for ",U,": ", sum(scoreList)/len(scoreList))
             # displayResult(resName[0].Name, resName[1], resName[2])
         # print(len(TestSet), len(TemplateSet))
         
