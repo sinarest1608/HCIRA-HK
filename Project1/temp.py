@@ -103,11 +103,11 @@ GestureType = ["triangle", "x", "rectangle", "circle", "check", "caret",
 
 # GestureType = ["triangle"]
 
-# for U in list(dataDict.keys())[0]:
-for U in dataDict.keys():
+for U in list(dataDict.keys())[0]:
+# for U in dataDict.keys():
     scoreList = []
     print("U, ---------------", U)
-    for E in range(1, 10):
+    for E in range(1, 3):
         print("E, ---------------", E)
         # Add 1-100 loop
         recoScore = 0
@@ -117,18 +117,20 @@ for U in dataDict.keys():
         TempTestLabels = []
         TestSet = []
         TestSetLabels = []
+        PickedLabels = []
         for G in GestureType:
             recoScore = 0
             PickGestureList = []
             for key in dataDict[U].keys():
                 if(G in key):
+                    # print("G ", G, "key", key)
                     # print(dataDict[U][key][0].X)
-                    PickGestureList.append(recognizer.Unistroke(G,dataDict[U][key]))
+                    PickGestureList.append(recognizer.Unistroke(key,dataDict[U][key]))
                     
                     # TempTestPoints.append(dataDict[U][key])
-                    TempTest.append(recognizer.Unistroke(G,dataDict[U][key]))
+                    TempTest.append(recognizer.Unistroke(key,dataDict[U][key]))
                     # TempTestLabels.append(G)
-               
+                      
             # pick gesture E times from pickgesturelist, pick T 1 time from same.     
             for p in range(1, E+1):
                 # print("p ", p)
@@ -141,9 +143,9 @@ for U in dataDict.keys():
                 # print("Picked", PickGestureList[randIndexTemplate].Name)
                 # print("Removed from test", TempTest[randIndexTemplate].Name, "Len(Test)", len(TempTest))
                 # TempTest.remove(TempTest[randIndexTemplate])
-                # for t in TempTest:
-                #     if t.Points == PickGestureList[randIndexTemplate].Points:
-                #         TempTest.remove(t)
+                for t in TempTest:
+                    if t.Name == PickGestureList[randIndexTemplate].Name:
+                        TempTest.remove(t)
                 
                         
             # print(TemplateSet[0][0].Name)
@@ -153,20 +155,22 @@ for U in dataDict.keys():
             randIndexTest = random.randint(0, len(TempTest)-1)
             TestSet.append(TempTest[randIndexTest])    
             
-        for T in TestSet:
-            # print("To be tested ",T[0])
-            Points = recognizer.resample(points=T.Points, n=64)
-            # print("points ",len(Points))
-            r = recognizer.indicativeAngle(Points)
-            Points = recognizer.rotateBy(Points, r)
-            Points = recognizer.scaleTo(Points, recognizer.SquareSize)
-            Points = recognizer.translateTo(Points, recognizer.Origin)
-            # print("points ",len(Points))
-            resName = recognizer.recognize(points=Points, templates=TemplateSet, size=recognizer.SquareSize)
-            # print("line 132 ","Original ", T.Name, "Res ", resName[0].Name, resName[1], resName[2])
-            if resName[0].Name == T.Name :
-                recoScore += 1
-            scoreList.append(recoScore)
+            for T in TestSet:
+                # print("To be tested ",T[0])
+                Points = recognizer.resample(points=T.Points, n=64)
+                # print("points ",len(Points))
+                r = recognizer.indicativeAngle(Points)
+                Points = recognizer.rotateBy(Points, r)
+                Points = recognizer.scaleTo(Points, recognizer.SquareSize)
+                Points = recognizer.translateTo(Points, recognizer.Origin)
+                # print("points ",len(Points))
+                resName = recognizer.recognize(points=Points, templates=TemplateSet, size=recognizer.SquareSize)
+                print("Original ", T.Name, "Res ", resName[0].Name, resName[1], resName[2], "Match", resName[0].Name[:-2] == T.Name[:-2])
+                if resName[0].Name[:-2] == T.Name[:-2] :
+                    recoScore += 1
+                # print("SCore for ", G, recoScore, "out of", len(TestSet))
+                scoreList.append(recoScore)
+        
         # scoreList.append(recoScore/100)
     print("Avg Score for User",U,":", mean(scoreList))
             # displayResult(resName[0].Name, resName[1], resName[2])
