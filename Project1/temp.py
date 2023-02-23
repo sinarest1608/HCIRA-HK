@@ -79,6 +79,7 @@ GestureType = ["triangle", "x", "rectangle", "circle", "check", "caret",
                  "arrow", "left_sq_bracket", "right_sq_bracket", "v", "delete_mark", "left_curly_brace", "right_curly_brace", "star", "pigtail", "question_mark"]
 
 # GestureType = ["triangle"]
+print(dataDict.keys())
 totalUserAccuracies = []
 for U in dataDict.keys():
 
@@ -147,11 +148,11 @@ for U in dataDict.keys():
                     # print(resName[0].Name, T.Name)
                     # print(" -------------")
                     recoScore += 1
+                row1 = [U, T.Name[0:-2], itr, E, len(TemplateSet), TemplateSet, TestSet, resName[0].Name, resName[0].Name[:-2] == T.Name[:-2], resName[1], resName[0].Name, resName[3]]
+                csvwriter.writerow(row1)
             scoreList.append(recoScore)
             
-            row1 = [U, G, i, E, len(TemplateSet), TemplateSet, TestSet, resName[0].Name, resName[0].Name[:-2] == T.Name[:-2], recoScore, resName[0].Name, resName[3]]
 
-            csvwriter.writerow(row1)
 
 
                 
