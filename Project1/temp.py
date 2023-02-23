@@ -103,6 +103,8 @@ for U in dataDict.keys():
             TestSet = []
             TestSetLabels = []
             PickedLabels = []
+            TemplateSetList = []
+            TestSetList = []
             for G in GestureType:
                 recoScore = 0
                 PickGestureList = []
@@ -127,6 +129,7 @@ for U in dataDict.keys():
                     # temporary = choices(PickGestureList, k=1)
                     # print(Test[0].Name)
                     TemplateSet.append(PickGestureList[randIndexTemplate])
+                    TemplateSetList.append(PickGestureList[randIndexTemplate].Name)
                     PickGestureList.pop(randIndexTemplate)
                     # TempTest.remove(TempTest[randIndexTemplate])
                     # for t in TempTest:
@@ -136,7 +139,8 @@ for U in dataDict.keys():
                             
            
                 randIndexTest = random.randint(0, len(PickGestureList)-1)
-                TestSet.append(PickGestureList[randIndexTest])  
+                TestSet.append(PickGestureList[randIndexTest]) 
+                TestSetList.append(PickGestureList[randIndexTest].Name) 
                 
             for T in TestSet:
                 resName = recognizer.recognize(points=T.Points, templates=TemplateSet, size=recognizer.SquareSize)
@@ -148,7 +152,7 @@ for U in dataDict.keys():
                     # print(resName[0].Name, T.Name)
                     # print(" -------------")
                     recoScore += 1
-                row1 = [U, T.Name[0:-2], itr, E, len(TemplateSet), TemplateSet, TestSet, resName[0].Name, resName[0].Name[:-2] == T.Name[:-2], resName[1], resName[0].Name, resName[3]]
+                row1 = [U, T.Name[0:-2], itr, E, len(TemplateSet), TemplateSetList, TestSetList, resName[0].Name, resName[0].Name[:-2] == T.Name[:-2], resName[1], resName[0].Name, resName[3]]
                 csvwriter.writerow(row1)
             scoreList.append(recoScore)
             
