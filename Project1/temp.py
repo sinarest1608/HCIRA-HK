@@ -65,20 +65,21 @@ GestureType = ["triangle", "x", "rectangle", "circle", "check", "caret",
                  "arrow", "left_sq_bracket", "right_sq_bracket", "v", "delete_mark", "left_curly_brace", "right_curly_brace", "star", "pigtail", "question_mark"]
 
 # GestureType = ["triangle"]
-
-# for U in [list(dataDict.keys())[0], list(dataDict.keys())[1]]:
 totalUserAccuracies = []
-for U in dataDict.keys():
+for U in [list(dataDict.keys())[0], list(dataDict.keys())[1]]:
+
+# for U in dataDict.keys():
     scoreList = []
-    print("U, ---------------", U)
+    # print("U, ---------------", U)
     count=0
     totalCount = 0
     scoreList = []
-    for E in range(1, 9):
-        print("E, ---------------", E)
+    for E in range(1, 3):
+        # print("E, ---------------", E)
         # Add 1-100 loop
         
-        for itr in range(1, 5):
+        for itr in range(1, 2):
+            print("User:", U, "Example Count:", E, "Iteration:", itr)
             recoScore = 0
             
             TemplateSet = []
@@ -122,17 +123,18 @@ for U in dataDict.keys():
                 randIndexTest = random.randint(0, len(PickGestureList)-1)
                 TestSet.append(PickGestureList[randIndexTest])  
                 
-                for T in TestSet:
-                    
-                    resName = recognizer.recognize(points=T.Points, templates=TemplateSet, size=recognizer.SquareSize)
-                    # print("Original ", T.Name, "Res ", resName[0].Name, resName[1], resName[2], "Match", resName[0].Name[:-2] == T.Name[:-2])
-       
-                    if resName[0].Name[:-2] == T.Name[:-2] :
-                        # print("Correct MAtch -------------")
-                        # print(resName[0].Name, T.Name)
-                        # print(" -------------")
-                        recoScore += 1
-            scoreList.append(recoScore)
+            for T in TestSet:
+                
+                resName = recognizer.recognize(points=T.Points, templates=TemplateSet, size=recognizer.SquareSize)
+                print("-------------")
+                print("Original ", T.Name, "Res ", resName[0].Name, resName[1], resName[2], "Match", resName[0].Name[:-2] == T.Name[:-2])
+                print("Nbest, ", resName[3])
+                if resName[0].Name[:-2] == T.Name[:-2] :
+                    # print("Correct MAtch -------------")
+                    # print(resName[0].Name, T.Name)
+                    # print(" -------------")
+                    recoScore += 1
+        scoreList.append(recoScore)
 
                 
             
