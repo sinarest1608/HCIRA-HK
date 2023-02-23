@@ -67,6 +67,7 @@ GestureType = ["triangle", "x", "rectangle", "circle", "check", "caret",
 # GestureType = ["triangle"]
 
 # for U in [list(dataDict.keys())[0], list(dataDict.keys())[1]]:
+totalUserAccuracies = []
 for U in dataDict.keys():
     scoreList = []
     print("U, ---------------", U)
@@ -139,7 +140,9 @@ for U in dataDict.keys():
     print("ScoreList", scoreList)
     print("sum",U,":", sum(scoreList))
     print("% Score for User",U,":", (sum(scoreList)*100)/(E*itr*16))
+    totalUserAccuracies.append((sum(scoreList)*100)/(E*itr*16))
 
+print("Total Accuracy:", mean(totalUserAccuracies))
 
 
 #------------------------LOOPs---------------------------------------------#
