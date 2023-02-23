@@ -4,10 +4,15 @@ from sys import platform
 import xml.etree.ElementTree as ET
 from collections import OrderedDict
 
-from numpy import mean
+# from numpy import mean
+from statistics import mean
 import recognizer
 # from random import choices
 import random
+import csv
+
+current_directory = os.getcwd() 
+print("curr ", current_directory)
 
 print(platform)
 if(platform == "darwin"):
@@ -21,7 +26,6 @@ else:
 #         self.Y = y
 
 dataset = []
-
 
 
 dataDict = {}
@@ -58,6 +62,16 @@ for fileName in os.listdir(cwd):
         gestureMap[name] = points
         gestureMap = OrderedDict(sorted(dict.items(gestureMap)))
     dataDict[subject] = gestureMap
+
+fileName = "logfile_1iteration.csv"
+fields = ["User[all-users]"	,"GestureType[all-gestures-types]" ,"RandomIteration[1to100]", "#ofTrainingExamples[E]", "TotalSizeOfTrainingSet[count]", "TrainingSetContents[specific-gesture-instances]", "Candidate[specific-instance]", "RecoResultGestureType[what-was-recognized]", "CorrectIncorrect[1or0]", "RecoResultScore", "RecoResultBestMatch[specific-instance]", "RecoResultNBestSorted[instance-and-score]"]
+
+row = ["Recognition Log: Kshitij Sinha(1416-0481) Hritik Baweja(5667-7397) // [$1 RECOGNITION ALGORITHM] // [Unistroke Gesture Logs] // USER-DEPENDENT RANDOM-100"]
+
+file = open(fileName, 'w')
+csvwriter = csv.writer(file)
+csvwriter.writerow(row)
+csvwriter.writerow(fields)
     
 #------------------------LOOPs---------------------------------------------#
 
@@ -66,7 +80,7 @@ GestureType = ["triangle", "x", "rectangle", "circle", "check", "caret",
 
 # GestureType = ["triangle"]
 totalUserAccuracies = []
-for U in [list(dataDict.keys())[0], list(dataDict.keys())[1]]:
+for U in dataDict.keys():
 
 # for U in dataDict.keys():
     scoreList = []
@@ -74,11 +88,11 @@ for U in [list(dataDict.keys())[0], list(dataDict.keys())[1]]:
     count=0
     totalCount = 0
     scoreList = []
-    for E in range(1, 3):
+    for E in range(1, 10):
         # print("E, ---------------", E)
         # Add 1-100 loop
         
-        for itr in range(1, 2):
+        for itr in range(1, 10):
             print("User:", U, "Example Count:", E, "Iteration:", itr)
             recoScore = 0
             
@@ -124,24 +138,28 @@ for U in [list(dataDict.keys())[0], list(dataDict.keys())[1]]:
                 TestSet.append(PickGestureList[randIndexTest])  
                 
             for T in TestSet:
-                
                 resName = recognizer.recognize(points=T.Points, templates=TemplateSet, size=recognizer.SquareSize)
-                print("-------------")
-                print("Original ", T.Name, "Res ", resName[0].Name, resName[1], resName[2], "Match", resName[0].Name[:-2] == T.Name[:-2])
-                print("Nbest, ", resName[3])
+                # print("-------------")
+                # print("Original ", T.Name, "Res ", resName[0].Name, resName[1], resName[2], "Match", resName[0].Name[:-2] == T.Name[:-2])
+                # print("Nbest, ", resName[3])
                 if resName[0].Name[:-2] == T.Name[:-2] :
                     # print("Correct MAtch -------------")
                     # print(resName[0].Name, T.Name)
                     # print(" -------------")
                     recoScore += 1
-        scoreList.append(recoScore)
+            scoreList.append(recoScore)
+            
+            row1 = [U, G, i, E, len(TemplateSet), TemplateSet, TestSet, resName[0].Name, resName[0].Name[:-2] == T.Name[:-2], recoScore, resName[0].Name, resName[3]]
+
+            csvwriter.writerow(row1)
+
 
                 
             
     # scoreList.append(recoScore/1)
-    print("ScoreList", scoreList)
-    print("sum",U,":", sum(scoreList))
-    print("% Score for User",U,":", (sum(scoreList)*100)/(E*itr*16))
+    # print("ScoreList", scoreList)
+    # print("sum",U,":", sum(scoreList))
+    # print("% Score for User",U,":", (sum(scoreList)*100)/(E*itr*16))
     totalUserAccuracies.append((sum(scoreList)*100)/(E*itr*16))
 
 print("Total Accuracy:", mean(totalUserAccuracies))
