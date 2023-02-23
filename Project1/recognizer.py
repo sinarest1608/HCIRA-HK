@@ -300,7 +300,7 @@ def recognize(points, templates, size):
         
         d = distanceAtBestAngle(points, T, -1*theta, theta, thetaD)
         tempScore = 1 - (d/(0.5*(math.sqrt(size**2 + size**2))))
-        tempDict[T.Name] = tempScore # REturn this sorted by desc, write to truncate values till 50 if exceeded
+        tempDict[T.Name] = round(tempScore, 2) # REturn this sorted by desc, write to truncate values till 50 if exceeded
         # dict(sorted(my_dict.items(), key=lambda item: item[1]))
         if d < b:
             b = d
@@ -311,4 +311,4 @@ def recognize(points, templates, size):
     NBest = dict(sorted(tempDict.items(), key=lambda item: item[1], reverse=True))
     e =  time.time()
     executionTime = e-s
-    return [Tprime, score, executionTime*1000, NBest]
+    return [Tprime, round(score, 2), executionTime*1000, NBest]
