@@ -289,6 +289,8 @@ def recognize(points, templates, size):
     # Represents Infinity
     b = math.inf
 
+    tempDict = {}
+
     theta = Deg2Rad(45)
     thetaD = Deg2Rad(2)
     Tprime = ""
@@ -297,6 +299,9 @@ def recognize(points, templates, size):
         # print("points Le, ", len(points))
         
         d = distanceAtBestAngle(points, T, -1*theta, theta, thetaD)
+        tempScore = 1 - (d/(0.5*(math.sqrt(size**2 + size**2))))
+        tempDict[T.Name] = tempScore # REturn this sorted by desc, write to truncate values till 50 if exceeded
+        
         if d < b:
             b = d
             Tprime = T
