@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<Gesture Name="question_mark04" Subject="7" Speed="medium" Number="4" NumPts="52" Millseconds="564" AppName="Gestures" AppVer="3.7.0.0" Date="Sunday, March 11, 2007" TimeOfDay="1:38:36 PM">
+<Gesture Name="question_mark04" Subject="6" Speed="medium" Number="4" NumPts="52" Millseconds="564" AppName="Gestures" AppVer="3.7.0.0" Date="Sunday, March 11, 2007" TimeOfDay="1:38:36 PM">
   <Point X="102" Y="176" T="122809838" />
   <Point X="99" Y="174" T="122809882" />
   <Point X="98" Y="172" T="122809895" />

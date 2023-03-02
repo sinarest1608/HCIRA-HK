@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<Gesture Name="rectangle06" Subject="7" Speed="fast" Number="6" NumPts="76" Millseconds="829" AppName="Gestures" AppVer="3.7.0.0" Date="Sunday, March 11, 2007" TimeOfDay="1:44:11 PM">
+<Gesture Name="rectangle06" Subject="6" Speed="fast" Number="6" NumPts="76" Millseconds="829" AppName="Gestures" AppVer="3.7.0.0" Date="Sunday, March 11, 2007" TimeOfDay="1:44:11 PM">
   <Point X="34" Y="130" T="123145275" />
   <Point X="35" Y="133" T="123145283" />
   <Point X="36" Y="135" T="123145288" />
