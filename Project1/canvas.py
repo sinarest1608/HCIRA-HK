@@ -44,20 +44,30 @@ gestureCount = 0
 gestureList = ["triangle", "x", "rectangle", "circle", "check", "caret",
                  "arrow", "left_sq_bracket", "right_sq_bracket", "v", "delete_mark", "left_curly_brace", "right_curly_brace", "star", "pigtail", "question_mark"]
 
+# Part 4 begins
 def part4(_):
+    # Shows the welcome message to user, indicates the application start
     messagebox.showinfo("Gesture","Welcome!")
+    
+    # Initialise global variables to keep track of Gesture Number, Gesture Count and The complete list
     global countNumberOfGestures
     global gestureCount
     global gestureList
     global count
 
+    # Get the current working directory 
     cwd = os.getcwd()
     # print("cwd ", cwd)
+    
+    # Storing directory name
     dir = "usersamples"
     path = ""
     count = 0
     # pathCheck = cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir
+    
+    # Check if path of directory does not exists
     if(os.path.exists(cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir) == False):
+        # Create new directory
         path = os.path.join(cwd, dir)
         os.mkdir(path)
         print("path ", path)
@@ -65,20 +75,32 @@ def part4(_):
         # os.mkdir(new_path)
         # count = 1
     
+    # Show Prompt asking user to draw the gesture with sample number
     messagebox.showinfo("Gesture","Draw Gesture " + gestureList[gestureCount] + " #"+str(countNumberOfGestures))
+    
+    # Increment count of gesture
     countNumberOfGestures += 1
 
+# Write data to XML file
 def insertXML(dataset):
     cwd = os.getcwd()
     # print("cwd ", cwd)
     dir = "usersamples"
     # tempPath = cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir
+    
+    # Get the count of current directories present
     count = len(os.listdir(cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir))
+    
+    # Create new directory path for next subject
     new_path = os.path.join(cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir, "Subject"+str(count+1))
+    
+    # Create the new directory
     os.mkdir(new_path)
 
     lastGesture = dataset[0][0]
     counter = 0
+    
+    # Write the gesture to the XML File
     for i in range(0, len(dataset)):
         if(dataset[i][0] != lastGesture):
             lastGesture = dataset[i][0]
@@ -103,6 +125,7 @@ def insertXML(dataset):
         currentTime = datetime.now()
         root.set("TimeOfDay", currentTime.strftime("%X %p"))
 
+        # Extract X and Y co-ordinates from Point Object and store in XML file
         for p in dataset[i][1]:
             element = ET.SubElement(root, "Point")
             element.set("X", str(p.X))
@@ -111,6 +134,7 @@ def insertXML(dataset):
             # print("X ", p.X)
             # print("Y ", p.Y)        
 
+        # Set the encoding as utf-8
         root_xml = ET.tostring(root, encoding="utf8")
 
         new_path = os.path.join(cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir, "Subject"+str(count+1))
@@ -118,6 +142,7 @@ def insertXML(dataset):
     # if(os.path.exists(new_path) == False):
     #     print("inside")
     #     os.mkdir(new_path)
+        # Save the file
         xmlPath = new_path + '/' + dataset[i][0] + str(counter) +".xml" if (platform == "darwin") else new_path + '\\' + dataset[i][0] + str(counter) +".xml"
         with open(xmlPath, "wb") as f:
             f.write(root_xml)
@@ -125,10 +150,16 @@ def insertXML(dataset):
 
     # print("count ", countNumberOfGestures)
 
+# Create dataset list to store all the points
 dataset = []
+
+# To keep count of number of datasets
 datasetTally = []
 
+# The submit button calls this
 def submit():
+    
+    # Define global variables to access and store data
     global countNumberOfGestures
     global gestureCount
     global gestureList
@@ -140,6 +171,7 @@ def submit():
     dir = "usersamples"
     path = ""
 
+    # Clear Screen when user clicks Submit gesture
     clearScreen()
     # print("gesture count inside submit ",gestureCount)
     # print("countNumber inside submit", countNumberOfGestures)
@@ -147,21 +179,32 @@ def submit():
     count = len(os.listdir(cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir))
     # print("c inside submit", count)
 
+    # To calculate user time
     time = e -s
     print(time)
+    
     if(gestureCount < len(gestureList)-1):
         dataset.append([gestureList[gestureCount], points, time])
+    
+    # If last gesture
     elif(gestureCount == len(gestureList)-1):
         dataset.append([gestureList[gestureCount],points, time])
         print("len ", len(dataset))
         # print("first ", dataset[0])
         # print("first T ", datasetTally[0])
+        
+        # Put everything in XML
         insertXML(dataset)
+        
+        # Reset data list
         dataset.clear()
         gestureCount = 0
         countNumberOfGestures = 1
+        
+        # Display Thank you message
         messagebox.showinfo("Thank you", "Thank you for participating!")
 
+    
     if(countNumberOfGestures < 2 and gestureCount < len(gestureList)-1) :
         messagebox.showinfo("Gesture To Be Made", "Draw Next Gesture: " + gestureList[gestureCount] + " #"+str(countNumberOfGestures))
         print("Gesture: " + gestureList[gestureCount] + str(countNumberOfGestures))
