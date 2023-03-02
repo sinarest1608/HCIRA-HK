@@ -178,7 +178,7 @@ def submit():
     
     # If last gesture
     elif(gestureCount == len(gestureList)-1):
-        if(countNumberOfGestures < 2):
+        if(countNumberOfGestures < 11):
             dataset.append([gestureList[gestureCount],points])
         else:
         # print("first ", dataset[0])
@@ -193,15 +193,15 @@ def submit():
             messagebox.showinfo("Thank you", "Thank you for participating!")
             main.destroy()
 
-    if(countNumberOfGestures < 2 and gestureCount < len(gestureList)) :
-        messagebox.showinfo("Draw Gesture", "Gesture To Be Made: " + gestureList[gestureCount] + str(countNumberOfGestures))
+    if(countNumberOfGestures <11 and gestureCount < len(gestureList)) :
+        # messagebox.showinfo("Draw Gesture", "Gesture To Be Made: " + gestureList[gestureCount] + str(countNumberOfGestures))
         print("Gesture: " + gestureList[gestureCount] + str(countNumberOfGestures))
         countNumberOfGestures += 1
     elif(gestureCount < len(gestureList)):
         gestureCount += 1
         countNumberOfGestures = 1
         if(gestureCount < len(gestureList)):
-            messagebox.showinfo("Draw Gesture", "Gesture To Be Made: " + gestureList[gestureCount] + str(countNumberOfGestures))
+            # messagebox.showinfo("Draw Gesture", "Gesture To Be Made: " + gestureList[gestureCount] + str(countNumberOfGestures))
             print("Gesture: " + gestureList[gestureCount] + str(countNumberOfGestures))
         countNumberOfGestures += 1
     else:
