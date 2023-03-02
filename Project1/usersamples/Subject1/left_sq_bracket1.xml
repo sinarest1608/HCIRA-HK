@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf8'?>
+<Gesture Name="left_sq_bracket1" Subject="1" Speed="Medium" Number="1" NumPts="25" Milliseconds="-515008" AppName="Gestures" AppVersion="1.0.0.0" Date="Wednesday, March 01, 2023" TimeOfDay="23:56:37 PM"><Point X="167" Y="133" />
+ 	<Point X="165" Y="133" />
+ 	<Point X="159" Y="133" />
+ 	<Point X="148" Y="133" />
+ 	<Point X="140" Y="133" />
+ 	<Point X="133" Y="135" />
+ 	<Point X="130" Y="136" />
+ 	<Point X="130" Y="137" />
+ 	<Point X="130" Y="140" />
+ 	<Point X="130" Y="150" />
+ 	<Point X="130" Y="164" />
+ 	<Point X="130" Y="176" />
+ 	<Point X="130" Y="186" />
+ 	<Point X="130" Y="198" />
+ 	<Point X="131" Y="209" />
+ 	<Point X="132" Y="217" />
+ 	<Point X="133" Y="224" />
+ 	<Point X="134" Y="229" />
+ 	<Point X="135" Y="232" />
+ 	<Point X="135" Y="233" />
+ 	<Point X="136" Y="234" />
+ 	<Point X="136" Y="235" />
+ 	<Point X="137" Y="238" />
+ 	<Point X="139" Y="239" />
+ 	<Point X="144" Y="241" />
+ 	</Gesture>

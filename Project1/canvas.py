@@ -65,7 +65,7 @@ def part4(_):
         # os.mkdir(new_path)
         # count = 1
     
-    messagebox.showinfo("Gesture","Gesture " + gestureList[gestureCount] + str(countNumberOfGestures))
+    messagebox.showinfo("Gesture","Draw Gesture " + gestureList[gestureCount] + " #"+str(countNumberOfGestures))
     countNumberOfGestures += 1
 
 def insertXML(dataset):
@@ -163,13 +163,13 @@ def submit():
         messagebox.showinfo("Thank you", "Thank you for participating!")
 
     if(countNumberOfGestures < 2 and gestureCount < len(gestureList)-1) :
-        messagebox.showinfo("Gesture To Be Made", "Gesture: " + gestureList[gestureCount] + str(countNumberOfGestures))
+        messagebox.showinfo("Gesture To Be Made", "Draw Next Gesture: " + gestureList[gestureCount] + " #"+str(countNumberOfGestures))
         print("Gesture: " + gestureList[gestureCount] + str(countNumberOfGestures))
         countNumberOfGestures += 1
     elif(gestureCount < len(gestureList)-1):
         gestureCount += 1
         countNumberOfGestures = 1
-        messagebox.showinfo("Gesture To Be Made", "Gesture: " + gestureList[gestureCount] + str(countNumberOfGestures))
+        messagebox.showinfo("Gesture To Be Made", "Draw Next Gesture: " + gestureList[gestureCount] + " #"+str(countNumberOfGestures))
         print("Gesture: " + gestureList[gestureCount] + str(countNumberOfGestures))
         countNumberOfGestures += 1
     else:
