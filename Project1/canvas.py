@@ -39,7 +39,7 @@ points = []
 #         self.Y = y
 
 countNumberOfGestures = 1
-gestureCount = 15
+gestureCount = 0
 
 gestureList = ["triangle", "x", "rectangle", "circle", "check", "caret",
                  "arrow", "left_sq_bracket", "right_sq_bracket", "v", "delete_mark", "left_curly_brace", "right_curly_brace", "star", "pigtail", "zig zag"]
