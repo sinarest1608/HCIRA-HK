@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf8'?>
+<Gesture Name="arrow1" Subject="2" Speed="Medium" Number="1" NumPts="7" Milliseconds="174234" AppName="Gestures" AppVersion="1.0.0.0" Date="Wednesday, March 01, 2023" TimeOfDay="23:57:59 PM"><Point X="230" Y="422" />
+ 	<Point X="230" Y="421" />
+ 	<Point X="235" Y="415" />
+ 	<Point X="243" Y="406" />
+ 	<Point X="250" Y="399" />
+ 	<Point X="255" Y="393" />
+ 	<Point X="258" Y="390" />
+ 	</Gesture>
