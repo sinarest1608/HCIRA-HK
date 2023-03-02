@@ -42,7 +42,7 @@ countNumberOfGestures = 1
 gestureCount = 0
 
 gestureList = ["triangle", "x", "rectangle", "circle", "check", "caret",
-                 "arrow", "left_sq_bracket", "right_sq_bracket", "v", "delete_mark", "left_curly_brace", "right_curly_brace", "star", "pigtail", "question_mark"]
+                 "arrow", "left_sq_bracket", "right_sq_bracket", "v", "delete_mark", "left_curly_brace", "right_curly_brace", "star", "pigtail", "zig zag"]
 
 def part4(_):
     # Shows the welcome message to user, indicates the application start
@@ -110,7 +110,6 @@ def insertXML(dataset):
         root.set("Speed", "Medium")
         root.set("Number", str(counter))
         root.set("NumPts", str(len(dataset[i][1])))
-        root.set("Milliseconds", str(dataset[i][2]))
         root.set("AppName", "Gestures")
         root.set("AppVersion", "1.0.0.0")
 
@@ -118,6 +117,7 @@ def insertXML(dataset):
         root.set("Date", currentDate.strftime("%A, %B %d, %Y"))
         currentTime = datetime.now()
         root.set("TimeOfDay", currentTime.strftime("%X %p"))
+    
 
         # Extract X and Y co-ordinates from Point Object and store in XML file
         for p in dataset[i][1]:
@@ -157,7 +157,6 @@ def submit():
     global points
     global count
     global datasetTally
-    global s, e
     
     cwd = os.getcwd()
     # print(type(cwd))
@@ -173,39 +172,35 @@ def submit():
     # print("c inside submit", count)
 
     # To calculate user time
-    time = e -s
-    time = time*-1 if time<0 else time
-    print(time)
     
     if(gestureCount < len(gestureList)-1):
-        dataset.append([gestureList[gestureCount], points, time])
+        dataset.append([gestureList[gestureCount], points])
     
     # If last gesture
     elif(gestureCount == len(gestureList)-1):
-        if(countNumberOfGestures < 11):
-            dataset.append([gestureList[gestureCount],points, time])
+        if(countNumberOfGestures < 2):
+            dataset.append([gestureList[gestureCount],points])
         else:
         # print("first ", dataset[0])
         # print("first T ", datasetTally[0])
-            dataset.append([gestureList[gestureCount],points, time])
+            dataset.append([gestureList[gestureCount],points])
             # Put everything in XML
             insertXML(dataset)
-            
             # Reset data list
             dataset.clear()
-            gestureCount = 0
-            countNumberOfGestures = 1
+
             # Display Thank you message
             messagebox.showinfo("Thank you", "Thank you for participating!")
+            main.destroy()
 
-    if(countNumberOfGestures < 11 and gestureCount < len(gestureList)) :
+    if(countNumberOfGestures < 2 and gestureCount < len(gestureList)) :
         messagebox.showinfo("Draw Gesture", "Gesture To Be Made: " + gestureList[gestureCount] + str(countNumberOfGestures))
         print("Gesture: " + gestureList[gestureCount] + str(countNumberOfGestures))
         countNumberOfGestures += 1
     elif(gestureCount < len(gestureList)):
         gestureCount += 1
         countNumberOfGestures = 1
-        if(gestureCount < len(gestureList)-1):
+        if(gestureCount < len(gestureList)):
             messagebox.showinfo("Draw Gesture", "Gesture To Be Made: " + gestureList[gestureCount] + str(countNumberOfGestures))
             print("Gesture: " + gestureList[gestureCount] + str(countNumberOfGestures))
         countNumberOfGestures += 1

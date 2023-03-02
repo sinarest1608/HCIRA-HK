@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf8'?>
-<Gesture Name="caret9" Subject="3" Speed="Medium" Number="9" NumPts="51" Milliseconds="-42393" AppName="Gestures" AppVersion="1.0.0.0" Date="Thursday, March 02, 2023" TimeOfDay="02:21:07 AM"><Point X="177" Y="267" />
+<Gesture Name="caret9" Subject="3" Speed="Medium" Number="9" NumPts="51" AppName="Gestures" AppVersion="1.0.0.0" Date="Thursday, March 02, 2023" TimeOfDay="02:21:07 AM"><Point X="177" Y="267" />
  	<Point X="178" Y="266" />
  	<Point X="178" Y="265" />
  	<Point X="181" Y="261" />
