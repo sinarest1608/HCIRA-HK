@@ -49,9 +49,9 @@ def part4(_):
     global gestureCount
     global gestureList
     global count
-    
+
     cwd = os.getcwd()
-    print("cwd ", cwd)
+    # print("cwd ", cwd)
     dir = "usersamples"
     path = ""
     count = 0
@@ -60,64 +60,72 @@ def part4(_):
         path = os.path.join(cwd, dir)
         os.mkdir(path)
         print("path ", path)
-        new_path = os.path.join(cwd+'\\'+dir, "Subject"+str(count+1))
-        os.mkdir(new_path)
-        count = 1
-    else:
-        count = len(os.listdir(cwd + '\\' + dir))
-        new_path = os.path.join(cwd+'\\'+dir, "Subject"+str(count+1))
-        # newLen = len(os.listdir(new_path))
-        os.mkdir(new_path)
-    submit()
+        # new_path = os.path.join(cwd+'\\'+dir, "Subject"+str(count+1))
+        # os.mkdir(new_path)
+        # count = 1
+    
+    messagebox.showinfo("Gesture","Gesture " + gestureList[gestureCount] + str(countNumberOfGestures))
+    countNumberOfGestures += 1
 
-def end():
-    global countNumberOfGestures
-    global gestureCount
+def insertXML(dataset):
     cwd = os.getcwd()
-    print(type(cwd))
+    # print("cwd ", cwd)
     dir = "usersamples"
-    path = ""
 
-    if(os.path.exists(cwd + '\\' + dir)):
-        count = len(os.listdir(cwd + '\\' + dir))
-    else:
-        path = os.path.join(cwd, dir)
-        os.mkdir(path)
-        print(type(path))
-    print(path)
+    count = len(os.listdir(cwd + '\\' + dir))
     new_path = os.path.join(cwd+'\\'+dir, "Subject"+str(count+1))
     os.mkdir(new_path)
-    countNumberOfGestures = 1
-    gestureCount = 1
 
-def insertXML(gestureList, gestureCount, points, cwd, count, dir):
-    global countNumberOfGestures
-    root = ET.Element('Gesture')
+    lastGesture = dataset[0][0]
+    counter = 0
+    for i in range(0, len(dataset)):
+        if(dataset[i][0] != lastGesture):
+            lastGesture = dataset[i][0]
+            counter = 1
+        else:
+            counter += 1
 
-    print("count ", countNumberOfGestures)
+        root = ET.Element('Gesture')
 
-    root.set("Name", gestureList[gestureCount])
-    root.set("Subject", str(count))
+        print(dataset[i][0], counter)
+        root.set("Name", dataset[i][0] + str(counter))
+        root.set("Subject", str(count+1))
+        root.set("Speed", "Medium")
+        root.set("Number", str(counter))
+        root.set("NumPts", str(len(dataset[i][1])))
+        root.set("Milliseconds", str(dataset[i][2]))
+        root.set("AppName", "Gestures")
+        root.set("AppVersion", "1.0.0.0")
 
-    for p in points:
-        element = ET.SubElement(root, "Point")
-        element.set("X", str(p.X))
-        element.set("Y", str(p.Y))
-        print("X ", p.X)
-        print("Y ", p.Y)
+        currentDate = datetime.now()
+        root.set("Date", currentDate.strftime("%A, %B %d, %Y"))
+        currentTime = datetime.now()
+        root.set("TimeOfDay", currentTime.strftime("%X %p"))
 
-    root_xml = ET.tostring(root)
+        for p in dataset[i][1]:
+            element = ET.SubElement(root, "Point")
+            element.set("X", str(p.X))
+            element.set("Y", str(p.Y))
+            element.tail = "\n \t"
+            # print("X ", p.X)
+            # print("Y ", p.Y)        
 
-    new_path = os.path.join(cwd+"\\"+dir, "Subject"+str(count))
+        root_xml = ET.tostring(root, encoding="utf8")
+
+        new_path = os.path.join(cwd+"\\"+dir, "Subject"+str(count+1))
 
     # if(os.path.exists(new_path) == False):
     #     print("inside")
     #     os.mkdir(new_path)
 
-    with open(new_path + '\\' + gestureList[gestureCount] + str(countNumberOfGestures) +".xml", "wb") as f:
-        f.write(root_xml)
+        with open(new_path + '\\' + dataset[i][0] + str(counter) +".xml", "wb") as f:
+            f.write(root_xml)
+            print("xml ", new_path + '\\' + dataset[i][0] + str(counter) +".xml")
 
-    countNumberOfGestures += 1
+    # print("count ", countNumberOfGestures)
+
+dataset = []
+datasetTally = []
 
 def submit():
     global countNumberOfGestures
@@ -125,34 +133,57 @@ def submit():
     global gestureList
     global points
     global count
+    global datasetTally
     cwd = os.getcwd()
-    print(type(cwd))
+    # print(type(cwd))
     dir = "usersamples"
     path = ""
 
-    print("gesture count inside submit ",gestureCount)
-    print("countNumber inside submit", countNumberOfGestures)
+    clearScreen()
+    # print("gesture count inside submit ",gestureCount)
+    # print("countNumber inside submit", countNumberOfGestures)
 
     count = len(os.listdir(cwd + '\\' + dir))
-    print("c inside submit", count)
+    # print("c inside submit", count)
 
-    if(countNumberOfGestures == 2 and gestureCount < len(gestureList)):
+    time = e -s
+    print(time)
+    if(gestureCount < len(gestureList)-1):
+        dataset.append([gestureList[gestureCount], points, time])
+    elif(gestureCount == len(gestureList)-1):
+        dataset.append([gestureList[gestureCount],points, time])
+        print("len ", len(dataset))
+        # print("first ", dataset[0])
+        # print("first T ", datasetTally[0])
+        insertXML(dataset)
+        dataset.clear()
+        gestureCount = 0
         countNumberOfGestures = 1
-        messagebox.showinfo("Gesture","Gesture " + gestureList[gestureCount] + str(countNumberOfGestures))
-        insertXML(gestureList, gestureCount, points, cwd, count, dir)
-        gestureCount += 1
-        
-    elif(gestureCount == len(gestureList)):
-        messagebox.showinfo("Thank you", "Thank you participating in data collection!")
-        # end()
-    else:
-        messagebox.showinfo("Gesture","Gesture " + gestureList[gestureCount] + str(countNumberOfGestures))
-        insertXML(gestureList, gestureCount, points, cwd, count, dir)
+        messagebox.showinfo("Thank you", "Thank you for participating!")
 
-    print("points inside submit", points)
+    if(countNumberOfGestures < 2 and gestureCount < len(gestureList)-1) :
+        messagebox.showinfo("Gesture To Be Made", "Gesture: " + gestureList[gestureCount] + str(countNumberOfGestures))
+        print("Gesture: " + gestureList[gestureCount] + str(countNumberOfGestures))
+        countNumberOfGestures += 1
+    elif(gestureCount < len(gestureList)-1):
+        gestureCount += 1
+        countNumberOfGestures = 1
+        messagebox.showinfo("Gesture To Be Made", "Gesture: " + gestureList[gestureCount] + str(countNumberOfGestures))
+        print("Gesture: " + gestureList[gestureCount] + str(countNumberOfGestures))
+        countNumberOfGestures += 1
+    else:
+        gestureCount += 1
+
+    print("gC ", gestureCount)
+
+
+    # countNumberOfGestures += 1
+    # print("points inside submit", points)
+    # print("countNUmber 2 inside submit ", countNumberOfGestures)
+
 
 def mouseDown(event):
-    global points
+    global points, s
     points = []
     clearScreen()
     obj1 = recognizer.DollarRecognizer()
@@ -161,6 +192,7 @@ def mouseDown(event):
     global x, y
     x = event.x
     y = event.y
+    s = datetime.now().microsecond
     points.append(recognizer.Point(x, y))
 
 
@@ -178,12 +210,14 @@ def mouseDrag(event):
 def mouseUp(event):
     # print("mouse up")
     # print(event.x, event.y)
-    global x, y
+    global x, y, datasetTally, s, e
     x = event.x
     y = event.y
     points.append(recognizer.Point(x, y))
     # Unistroke(points=points, name="")
-    # print(points)
+    # print("points when mouse up ", points)
+    e = datetime.now().microsecond
+    datasetTally.append(points)
 
 
 # We bind the above functions to events and triggers provided by Tkinter library
@@ -215,22 +249,27 @@ def displayResult(template, score, timeTaken):
 # Calcualting the result and identifying gesture. This function is called on the "Recognize" function and returns the result to the displayResult function
 def result():
     Points = recognizer.resample(points=points, n=64)
-    print("points ",len(Points))
+    # print("points ",len(Points))
     r = recognizer.indicativeAngle(Points)
     Points = recognizer.rotateBy(Points, r)
     Points = recognizer.scaleTo(Points, recognizer.SquareSize)
     Points = recognizer.translateTo(Points, recognizer.Origin)
-    print("points ",len(Points))
+    # print("points ",len(Points))
     resName = recognizer.recognize(points=Points, templates=recognizer.DollarRecognizer().Unistrokes, size=recognizer.SquareSize)
-    print("line 386 ", resName[0].Name, resName[1], resName[2])
+    # print("line 386 ", resName[0].Name, resName[1], resName[2])
     displayResult(resName[0].Name, resName[1], resName[2])
 
-# Defining a recognize button for the window
-recognizeScreenButton = tkinter.Button(
-    main, text='Recognize Gesture', bd='7', command=submit)
 
-# Placing the button at the very bottom of the window
-recognizeScreenButton.pack(side='left')
+# Defining a recognize button for the window
+# recognizeScreenButton = tkinter.Button(
+#     main, text='Recognize Gesture', bd='7', command=result)
+
+# # Placing the button at the very bottom of the window
+# recognizeScreenButton.pack(side='left')
+
+
+submitButton = tkinter.Button(main, text='Submit Gesture', bd='7', command=submit)
+submitButton.pack(side='left')
 
 # Put the Tkinter App in loop so it keeps running until terminated explicitly using Ctrl+C
 main.mainloop()
