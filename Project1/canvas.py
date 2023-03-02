@@ -87,7 +87,7 @@ def insertXML(dataset):
     # Get the count of current directories present
     count = len(os.listdir(cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir))
     # Create new directory path for next subject
-    new_path = os.path.join(cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir, "Subject"+str(count+1))
+    new_path = os.path.join(cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir, "Subject"+str("1_itr"))
     # Create the new directory
     os.mkdir(new_path)
 
@@ -131,7 +131,7 @@ def insertXML(dataset):
         # Set the encoding as utf-8
         root_xml = ET.tostring(root, encoding="utf8")
 
-        new_path = os.path.join(cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir, "Subject"+str(count+1))
+        new_path = os.path.join(cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir, "Subject"+str("1_itr"))
 
     # if(os.path.exists(new_path) == False):
     #     print("inside")
@@ -178,7 +178,7 @@ def submit():
     
     # If last gesture
     elif(gestureCount == len(gestureList)-1):
-        if(countNumberOfGestures < 11):
+        if(countNumberOfGestures < 2):
             dataset.append([gestureList[gestureCount],points])
         else:
         # print("first ", dataset[0])
@@ -193,15 +193,15 @@ def submit():
             messagebox.showinfo("Thank you", "Thank you for participating!")
             main.destroy()
 
-    if(countNumberOfGestures <11 and gestureCount < len(gestureList)) :
-        # messagebox.showinfo("Draw Gesture", "Gesture To Be Made: " + gestureList[gestureCount] + str(countNumberOfGestures))
+    if(countNumberOfGestures <2 and gestureCount < len(gestureList)) :
+        messagebox.showinfo("Draw Gesture", "Gesture To Be Made: " + gestureList[gestureCount] + str(countNumberOfGestures))
         print("Gesture: " + gestureList[gestureCount] + str(countNumberOfGestures))
         countNumberOfGestures += 1
     elif(gestureCount < len(gestureList)):
         gestureCount += 1
         countNumberOfGestures = 1
         if(gestureCount < len(gestureList)):
-            # messagebox.showinfo("Draw Gesture", "Gesture To Be Made: " + gestureList[gestureCount] + str(countNumberOfGestures))
+            messagebox.showinfo("Draw Gesture", "Gesture To Be Made: " + gestureList[gestureCount] + str(countNumberOfGestures))
             print("Gesture: " + gestureList[gestureCount] + str(countNumberOfGestures))
         countNumberOfGestures += 1
     else:
