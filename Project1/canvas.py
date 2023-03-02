@@ -135,6 +135,8 @@ def submit():
     global points
     global count
     global datasetTally
+    global s, e
+    
     cwd = os.getcwd()
     # print(type(cwd))
     dir = "usersamples"
@@ -152,25 +154,28 @@ def submit():
     if(gestureCount < len(gestureList)-1):
         dataset.append([gestureList[gestureCount], points, time])
     elif(gestureCount == len(gestureList)-1):
-        dataset.append([gestureList[gestureCount],points, time])
-        print("len ", len(dataset))
+        if(countNumberOfGestures < 11):
+            dataset.append([gestureList[gestureCount],points, time])
+        else:
         # print("first ", dataset[0])
         # print("first T ", datasetTally[0])
-        insertXML(dataset)
-        dataset.clear()
-        gestureCount = 0
-        countNumberOfGestures = 1
-        messagebox.showinfo("Thank you", "Thank you for participating!")
+            dataset.append([gestureList[gestureCount],points, time])
+            insertXML(dataset)
+            dataset.clear()
+            gestureCount = 0
+            countNumberOfGestures = 1
+            messagebox.showinfo("Thank you", "Thank you for participating!")
 
-    if(countNumberOfGestures < 2 and gestureCount < len(gestureList)-1) :
+    if(countNumberOfGestures < 11 and gestureCount < len(gestureList)) :
         messagebox.showinfo("Gesture To Be Made", "Gesture: " + gestureList[gestureCount] + str(countNumberOfGestures))
         print("Gesture: " + gestureList[gestureCount] + str(countNumberOfGestures))
         countNumberOfGestures += 1
-    elif(gestureCount < len(gestureList)-1):
+    elif(gestureCount < len(gestureList)):
         gestureCount += 1
         countNumberOfGestures = 1
-        messagebox.showinfo("Gesture To Be Made", "Gesture: " + gestureList[gestureCount] + str(countNumberOfGestures))
-        print("Gesture: " + gestureList[gestureCount] + str(countNumberOfGestures))
+        if(gestureCount < len(gestureList)-1):
+            messagebox.showinfo("Gesture To Be Made", "Gesture: " + gestureList[gestureCount] + str(countNumberOfGestures))
+            print("Gesture: " + gestureList[gestureCount] + str(countNumberOfGestures))
         countNumberOfGestures += 1
     else:
         gestureCount += 1
