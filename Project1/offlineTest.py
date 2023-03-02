@@ -76,7 +76,7 @@ dataDict = dict(sorted(dataDict.items(), key=lambda x: int(x[0])))
 
 
 # Creating logFile instance and writing column names
-fileName = "logfile_1iteration.csv"
+fileName = "logfile.csv"
 fields = ["User[all-users]"	,"GestureType[all-gestures-types]" ,"RandomIteration[1to100]", "#ofTrainingExamples[E]", "TotalSizeOfTrainingSet[count]", "TrainingSetContents[specific-gesture-instances]", "Candidate[specific-instance]", "RecoResultGestureType[what-was-recognized]", "CorrectIncorrect[1or0]", "RecoResultScore", "RecoResultBestMatch[specific-instance]", "RecoResultNBestSorted[instance-and-score]"]
 
 row = ["Recognition Log: Kshitij Sinha(1416-0481) Hritik Baweja(5667-7397) // [$1 RECOGNITION ALGORITHM] // [Unistroke Gesture Logs] // USER-DEPENDENT RANDOM-100"]
