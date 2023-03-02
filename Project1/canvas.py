@@ -10,6 +10,7 @@ from tkinter import messagebox
 import recognizer
 import xml.etree.ElementTree as ET
 import os
+from sys import platform
 # Part 1a:
 # Create A Tkinter App
 main = tkinter.Tk()
@@ -55,8 +56,8 @@ def part4(_):
     dir = "usersamples"
     path = ""
     count = 0
-
-    if(os.path.exists(cwd + '\\' + dir) == False):
+    # pathCheck = cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir
+    if(os.path.exists(cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir) == False):
         path = os.path.join(cwd, dir)
         os.mkdir(path)
         print("path ", path)
@@ -71,9 +72,9 @@ def insertXML(dataset):
     cwd = os.getcwd()
     # print("cwd ", cwd)
     dir = "usersamples"
-
-    count = len(os.listdir(cwd + '\\' + dir))
-    new_path = os.path.join(cwd+'\\'+dir, "Subject"+str(count+1))
+    # tempPath = cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir
+    count = len(os.listdir(cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir))
+    new_path = os.path.join(cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir, "Subject"+str(count+1))
     os.mkdir(new_path)
 
     lastGesture = dataset[0][0]
@@ -112,15 +113,15 @@ def insertXML(dataset):
 
         root_xml = ET.tostring(root, encoding="utf8")
 
-        new_path = os.path.join(cwd+"\\"+dir, "Subject"+str(count+1))
+        new_path = os.path.join(cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir, "Subject"+str(count+1))
 
     # if(os.path.exists(new_path) == False):
     #     print("inside")
     #     os.mkdir(new_path)
-
-        with open(new_path + '\\' + dataset[i][0] + str(counter) +".xml", "wb") as f:
+        xmlPath = new_path + '/' + dataset[i][0] + str(counter) +".xml" if (platform == "darwin") else new_path + '\\' + dataset[i][0] + str(counter) +".xml"
+        with open(xmlPath, "wb") as f:
             f.write(root_xml)
-            print("xml ", new_path + '\\' + dataset[i][0] + str(counter) +".xml")
+            print("xml ", xmlPath)
 
     # print("count ", countNumberOfGestures)
 
@@ -143,7 +144,7 @@ def submit():
     # print("gesture count inside submit ",gestureCount)
     # print("countNumber inside submit", countNumberOfGestures)
 
-    count = len(os.listdir(cwd + '\\' + dir))
+    count = len(os.listdir(cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir))
     # print("c inside submit", count)
 
     time = e -s
