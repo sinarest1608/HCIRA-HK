@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf8'?>
+<Gesture Name="caret10" Subject="3" Speed="Medium" Number="10" NumPts="42" Milliseconds="1024" AppName="Gestures" AppVersion="1.0.0.0" Date="Thursday, March 02, 2023" TimeOfDay="02:21:07 AM"><Point X="190" Y="246" T="1" />
+ 	<Point X="190" Y="245" T="1" />
+ 	<Point X="191" Y="243" T="1" />
+ 	<Point X="194" Y="238" T="1" />
+ 	<Point X="198" Y="230" T="1" />
+ 	<Point X="203" Y="221" T="1" />
+ 	<Point X="210" Y="206" T="1" />
+ 	<Point X="216" Y="192" T="1" />
+ 	<Point X="228" Y="161" T="1" />
+ 	<Point X="237" Y="139" T="1" />
+ 	<Point X="250" Y="111" T="1" />
+ 	<Point X="258" Y="94" T="1" />
+ 	<Point X="263" Y="86" T="1" />
+ 	<Point X="264" Y="83" T="1" />
+ 	<Point X="266" Y="78" T="1" />
+ 	<Point X="267" Y="75" T="1" />
+ 	<Point X="269" Y="71" T="1" />
+ 	<Point X="271" Y="68" T="1" />
+ 	<Point X="271" Y="65" T="1" />
+ 	<Point X="272" Y="64" T="1" />
+ 	<Point X="273" Y="66" T="1" />
+ 	<Point X="274" Y="68" T="1" />
+ 	<Point X="278" Y="80" T="1" />
+ 	<Point X="280" Y="91" T="1" />
+ 	<Point X="285" Y="110" T="1" />
+ 	<Point X="290" Y="129" T="1" />
+ 	<Point X="293" Y="146" T="1" />
+ 	<Point X="299" Y="162" T="1" />
+ 	<Point X="300" Y="169" T="1" />
+ 	<Point X="301" Y="178" T="1" />
+ 	<Point X="301" Y="181" T="1" />
+ 	<Point X="304" Y="190" T="1" />
+ 	<Point X="305" Y="194" T="1" />
+ 	<Point X="306" Y="200" T="1" />
+ 	<Point X="307" Y="202" T="1" />
+ 	<Point X="308" Y="206" T="1" />
+ 	<Point X="308" Y="207" T="1" />
+ 	<Point X="309" Y="208" T="1" />
+ 	<Point X="309" Y="209" T="1" />
+ 	<Point X="310" Y="210" T="1" />
+ 	<Point X="310" Y="211" T="1" />
+ 	<Point X="310" Y="211" T="1" />
+ 	</Gesture>
