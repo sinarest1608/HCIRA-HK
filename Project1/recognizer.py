@@ -320,7 +320,7 @@ def recognize(points, templates, size):
     #     NBest = NBest[0:50]
     e =  time.time()
     executionTime = e-s
-    print("Old Len ", len(NBest))
+    # print("Old Len ", len(NBest))
     NBest = dict(itertools.islice(NBest.items(),50))
-    print("New Len ", len(NBest))
+    # print("New Len ", len(NBest))
     return [Tprime, round(score, 2), executionTime*1000, NBest]

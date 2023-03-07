@@ -109,8 +109,8 @@ GestureType = ["triangle", "x", "rectangle", "circle", "check", "caret",
 totalUserAccuracies = []
 
 # Iterating in users
-for U in list(dataDict.keys())[0]:
-# for U in dataDict.keys():
+# for U in list(dataDict.keys())[0]:
+for U in dataDict.keys():
     scoreList = []
     # print("U, ---------------", U)
     count=0
@@ -184,10 +184,10 @@ for U in list(dataDict.keys())[0]:
                     # print(resName[0].Name, T.Name)
                     # print(" -------------")
                     recoScore += 1
-                else:
-                    print("InCorrect MAtch -------------")
-                    print(resName[0].Name, T.Name)
-                    print(" -------------")       
+                # else:
+                #     print("InCorrect MAtch -------------")
+                #     print(resName[0].Name, T.Name)
+                #     print(" -------------")       
                 # Write result to logfile
                 row1 = [U, T.Name[0:-2], itr, E, len(TemplateSet), TemplateSetList, T.Name, resName[0].Name, 1 if (resName[0].Name[:-2] == T.Name[:-2]) else 0, resName[1], resName[0].Name, resName[3]]
                 csvwriter.writerow(row1)
