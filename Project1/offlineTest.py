@@ -17,29 +17,37 @@ current_directory = os.getcwd()
 
 # print(platform)
 # Changing file path representations aaccording to the OS (MacOS/Win)
-if(platform == "darwin"):
-    cwd = os.getcwd() + "/xml/xml_logs"
-else:
-    cwd = os.getcwd() + '\Project1' + '\\' + 'xml' + '\\xml_logs'
+# if(platform == "darwin"):
+#     cwd = os.getcwd() + "/xml/xml_logs"
+# else:
+#     cwd = os.getcwd() + '\Project1' + '\\' + 'xml' + '\\xml_logs'
 
+if(platform == "darwin"):
+    cwd = os.getcwd() + "/usersamples"
+else:
+    cwd = os.getcwd() + '\Project1' + '\\' + 'usersamples'
 # Initializing data dictionary
 dataDict = {}
 gestureList = []
 
 # Iterating in the working directory to access data folders
 for fileName in os.listdir(cwd):
+    if fileName == ".DS_Store":
+        continue
     # print("cwd ", cwd +'\\' + fileName)
     if(platform == "darwin"):
        userFolder = cwd + '/' + fileName 
     else:
         userFolder = cwd + '\\' + fileName
-        
+    
+    print(userFolder)
     # Choosing the medium speed folder 
-    speedFolder = userFolder+'/medium' if (platform == "darwin") else userFolder+'\\medium'
+    # speedFolder = userFolder+'/medium' if (platform == "darwin") else userFolder+'\\medium'
+    speedFolder = userFolder
     gestureList = []
     gestureMap = {}
     for xml in os.listdir(speedFolder):
-        
+       
         # print("xml, ", xml, "usr, ", fileName)
         xml = speedFolder+'/'+xml if (platform == "darwin") else speedFolder+'\\'+xml
         
@@ -76,7 +84,7 @@ dataDict = dict(sorted(dataDict.items(), key=lambda x: int(x[0])))
 
 
 # Creating logFile instance and writing column names
-fileName = "logfile.csv"
+fileName = "logfile_usersamples.csv"
 fields = ["User[all-users]"	,"GestureType[all-gestures-types]" ,"RandomIteration[1to100]", "#ofTrainingExamples[E]", "TotalSizeOfTrainingSet[count]", "TrainingSetContents[specific-gesture-instances]", "Candidate[specific-instance]", "RecoResultGestureType[what-was-recognized]", "CorrectIncorrect[1or0]", "RecoResultScore", "RecoResultBestMatch[specific-instance]", "RecoResultNBestSorted[instance-and-score]"]
 
 row = ["Recognition Log: Kshitij Sinha(1416-0481) Hritik Baweja(5667-7397) // [$1 RECOGNITION ALGORITHM] // [Unistroke Gesture Logs] // USER-DEPENDENT RANDOM-100"]
@@ -90,16 +98,19 @@ csvwriter.writerow(fields)
 
 
 # Creating a list of all Gesture Types
+# GestureType = ["triangle", "x", "rectangle", "circle", "check", "caret",
+#                  "arrow", "left_sq_bracket", "right_sq_bracket", "v", "delete_mark", "left_curly_brace", "right_curly_brace", "star", "pigtail", "question_mark"]
+
 GestureType = ["triangle", "x", "rectangle", "circle", "check", "caret",
-                 "arrow", "left_sq_bracket", "right_sq_bracket", "v", "delete_mark", "left_curly_brace", "right_curly_brace", "star", "pigtail", "question_mark"]
+                 "arrow", "left_sq_bracket", "right_sq_bracket", "v", "delete_mark", "left_curly_brace", "right_curly_brace", "star", "pigtail", "zig zag"]
 
 # GestureType = ["triangle"]
 # print(dataDict.keys())
 totalUserAccuracies = []
 
 # Iterating in users
-# for U in list(dataDict.keys())[0]:
-for U in dataDict.keys():
+for U in list(dataDict.keys())[0]:
+# for U in dataDict.keys():
     scoreList = []
     # print("U, ---------------", U)
     count=0
@@ -173,7 +184,10 @@ for U in dataDict.keys():
                     # print(resName[0].Name, T.Name)
                     # print(" -------------")
                     recoScore += 1
-                    
+                else:
+                    print("InCorrect MAtch -------------")
+                    print(resName[0].Name, T.Name)
+                    print(" -------------")       
                 # Write result to logfile
                 row1 = [U, T.Name[0:-2], itr, E, len(TemplateSet), TemplateSetList, T.Name, resName[0].Name, 1 if (resName[0].Name[:-2] == T.Name[:-2]) else 0, resName[1], resName[0].Name, resName[3]]
                 csvwriter.writerow(row1)
