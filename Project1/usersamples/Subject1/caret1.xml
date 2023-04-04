@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf8'?>
+<Gesture Name="caret1" Subject="1" Speed="Medium" Number="1" NumPts="23" Milliseconds="-442374" AppName="Gestures" AppVersion="1.0.0.0" Date="Wednesday, March 01, 2023" TimeOfDay="23:56:37 PM"><Point X="187" Y="216" />
+ 	<Point X="186" Y="216" />
+ 	<Point X="186" Y="220" />
+ 	<Point X="188" Y="233" />
+ 	<Point X="191" Y="250" />
+ 	<Point X="196" Y="267" />
+ 	<Point X="199" Y="278" />
+ 	<Point X="200" Y="285" />
+ 	<Point X="201" Y="289" />
+ 	<Point X="202" Y="291" />
+ 	<Point X="202" Y="292" />
+ 	<Point X="202" Y="290" />
+ 	<Point X="203" Y="286" />
+ 	<Point X="205" Y="278" />
+ 	<Point X="207" Y="267" />
+ 	<Point X="212" Y="248" />
+ 	<Point X="219" Y="225" />
+ 	<Point X="224" Y="206" />
+ 	<Point X="229" Y="192" />
+ 	<Point X="233" Y="183" />
+ 	<Point X="235" Y="178" />
+ 	<Point X="236" Y="177" />
+ 	<Point X="235" Y="177" />
+ 	</Gesture>
