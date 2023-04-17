@@ -9,8 +9,8 @@ gestureList = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "E
 for fileName in os.listdir(current_directory):
     gestureMap = {}
     print(fileName)
-    xml_path = current_directory + '\\' + "temp"
-    xml_pathn = current_directory + '\\' + "s03"
+    xml_path = current_directory + '\\' + "s06"
+    xml_pathn = current_directory + '\\' + "s06"
     # os.mkdir(xml_pathn)
     for xml in os.listdir(xml_path):
         tree = ET.parse(xml_path + '\\' + xml)
@@ -23,8 +23,8 @@ for fileName in os.listdir(current_directory):
 
         newroot = ET.Element('Gesture')
 
-        newroot.set("Name", gestureList[int(xml[0])] + xml[1]+ xml[2])
-        newroot.set("Subject", "1")
+        newroot.set("Name", xml[:-4])
+        newroot.set("Subject", "6")
         newroot.set("Speed", "Medium")
         newroot.set("Number", root.attrib.get('Number'))
         newroot.set("NumPts", root.attrib.get('NumPts'))
@@ -47,6 +47,6 @@ for fileName in os.listdir(current_directory):
 
         
         # os.mkdir(xml_pathn + '\\' + xml)
-        with open(xml_pathn + '\\' + gestureList[int(xml[0])] +xml[1]+ xml[2] + ".xml", "wb") as f:
+        with open(xml_pathn + '\\' + xml[:-4] + ".xml", "wb") as f:
             f.write(root_xml)
             print("xml ", xml)
