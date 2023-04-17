@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf8'?>
+<Gesture Name="Seven04" Subject="1" Speed="Medium" Number="4" NumPts="37" Milliseconds="1024" AppName="Gestures" AppVersion="1.0.0.0" Date="Monday, April 17, 2023" TimeOfDay="01:13:59 AM"><Point X="169" Y="159" T="1" />
+ 	<Point X="170" Y="159" T="1" />
+ 	<Point X="172" Y="158" T="1" />
+ 	<Point X="173" Y="158" T="1" />
+ 	<Point X="177" Y="158" T="1" />
+ 	<Point X="197" Y="154" T="1" />
+ 	<Point X="204" Y="153" T="1" />
+ 	<Point X="213" Y="151" T="1" />
+ 	<Point X="216" Y="150" T="1" />
+ 	<Point X="221" Y="150" T="1" />
+ 	<Point X="223" Y="150" T="1" />
+ 	<Point X="224" Y="150" T="1" />
+ 	<Point X="225" Y="150" T="1" />
+ 	<Point X="226" Y="150" T="1" />
+ 	<Point X="227" Y="150" T="1" />
+ 	<Point X="228" Y="150" T="1" />
+ 	<Point X="228" Y="151" T="1" />
+ 	<Point X="229" Y="151" T="1" />
+ 	<Point X="230" Y="155" T="1" />
+ 	<Point X="230" Y="158" T="1" />
+ 	<Point X="231" Y="165" T="1" />
+ 	<Point X="232" Y="174" T="1" />
+ 	<Point X="234" Y="186" T="1" />
+ 	<Point X="235" Y="193" T="1" />
+ 	<Point X="236" Y="202" T="1" />
+ 	<Point X="237" Y="216" T="1" />
+ 	<Point X="238" Y="227" T="1" />
+ 	<Point X="240" Y="238" T="1" />
+ 	<Point X="240" Y="250" T="1" />
+ 	<Point X="240" Y="257" T="1" />
+ 	<Point X="240" Y="266" T="1" />
+ 	<Point X="241" Y="282" T="1" />
+ 	<Point X="241" Y="291" T="1" />
+ 	<Point X="241" Y="297" T="1" />
+ 	<Point X="241" Y="300" T="1" />
+ 	<Point X="241" Y="301" T="1" />
+ 	<Point X="241" Y="301" T="1" />
+ 	</Gesture>

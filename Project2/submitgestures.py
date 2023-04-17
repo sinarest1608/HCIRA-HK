@@ -41,7 +41,7 @@ points = []
 countNumberOfGestures = 1
 gestureCount = 0
 
-gestureList = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+gestureList = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"]
 
 
 def part4(_):
@@ -86,8 +86,9 @@ def insertXML(dataset):
     
     # Get the count of current directories present
     count = len(os.listdir(cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir))
+    print(count)
     # Create new directory path for next subject
-    new_path = os.path.join(cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir, "Subject"+str(count+1))
+    new_path = os.path.join(cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir, "s" + str(0) + str(count+1) if(count != 9) else "s" + str(count+1))
     # Create the new directory
     os.mkdir(new_path)
 
@@ -106,7 +107,7 @@ def insertXML(dataset):
 
         print(dataset[i][0], counter)
         root.set("Name", dataset[i][0] + str(counter))
-        root.set("Subject", str(count+1))
+        root.set("Subject" + str(0) if(count != 9) else "", str(count+1))
         root.set("Speed", "Medium")
         root.set("Number", str(counter))
         root.set("NumPts", str(len(dataset[i][1])))
@@ -124,6 +125,7 @@ def insertXML(dataset):
             element = ET.SubElement(root, "Point")
             element.set("X", str(p.X))
             element.set("Y", str(p.Y))
+            element.set("T", str(1))
             element.tail = "\n \t"
             # print("X ", p.X)
             # print("Y ", p.Y)        
@@ -131,7 +133,7 @@ def insertXML(dataset):
         # Set the encoding as utf-8
         root_xml = ET.tostring(root, encoding="utf8")
 
-        new_path = os.path.join(cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir, "Subject"+str(count+1))
+        new_path = os.path.join(cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir, "s" + str(0) + str(count+1) if(count != 9) else "s" + str(count+1))
 
     # if(os.path.exists(new_path) == False):
     #     print("inside")
@@ -169,21 +171,23 @@ def submit():
     # print("countNumber inside submit", countNumberOfGestures)
 
     count = len(os.listdir(cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir))
+    print("line 174 ", count)
+    print("line 175 ", os.listdir(cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir))
     # print("c inside submit", count)
 
     # To calculate user time
     
     if(gestureCount < len(gestureList)-1):
-        dataset.append([gestureList[gestureCount], points])
+        dataset.append([gestureList[gestureCount] + "0", points])
     
     # If last gesture
     elif(gestureCount == len(gestureList)-1):
         if(countNumberOfGestures < 11):
-            dataset.append([gestureList[gestureCount],points])
+            dataset.append([gestureList[gestureCount] + "0",points])
         else:
         # print("first ", dataset[0])
         # print("first T ", datasetTally[0])
-            dataset.append([gestureList[gestureCount],points])
+            dataset.append([gestureList[gestureCount] + "0",points])
             # Put everything in XML
             insertXML(dataset)
             # Reset data list
@@ -194,14 +198,14 @@ def submit():
             main.destroy()
 
     if(countNumberOfGestures <11 and gestureCount < len(gestureList)) :
-        messagebox.showinfo("Draw Gesture", "Gesture To Be Made: " + gestureList[gestureCount] + str(countNumberOfGestures))
+        messagebox.showinfo("Draw Gesture", "Gesture To Be Made: " + gestureList[gestureCount] + " -> Gesture #" +str(countNumberOfGestures))
         print("Gesture: " + gestureList[gestureCount] + str(countNumberOfGestures))
         countNumberOfGestures += 1
     elif(gestureCount < len(gestureList)):
         gestureCount += 1
         countNumberOfGestures = 1
         if(gestureCount < len(gestureList)):
-            messagebox.showinfo("Draw Gesture", "Gesture To Be Made: " + gestureList[gestureCount] + str(countNumberOfGestures))
+            messagebox.showinfo("Draw Gesture", "Gesture To Be Made: " + gestureList[gestureCount] + " -> Gesture #" +str(countNumberOfGestures))
             print("Gesture: " + gestureList[gestureCount] + str(countNumberOfGestures))
         countNumberOfGestures += 1
     else:

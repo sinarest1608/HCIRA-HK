@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf8'?>
+<Gesture Name="One04" Subject="1" Speed="Medium" Number="4" NumPts="17" Milliseconds="1024" AppName="Gestures" AppVersion="1.0.0.0" Date="Monday, April 17, 2023" TimeOfDay="01:13:59 AM"><Point X="211" Y="193" T="1" />
+ 	<Point X="211" Y="194" T="1" />
+ 	<Point X="211" Y="197" T="1" />
+ 	<Point X="211" Y="198" T="1" />
+ 	<Point X="211" Y="214" T="1" />
+ 	<Point X="211" Y="220" T="1" />
+ 	<Point X="211" Y="242" T="1" />
+ 	<Point X="211" Y="259" T="1" />
+ 	<Point X="212" Y="272" T="1" />
+ 	<Point X="212" Y="279" T="1" />
+ 	<Point X="212" Y="293" T="1" />
+ 	<Point X="212" Y="296" T="1" />
+ 	<Point X="212" Y="301" T="1" />
+ 	<Point X="212" Y="302" T="1" />
+ 	<Point X="212" Y="303" T="1" />
+ 	<Point X="213" Y="303" T="1" />
+ 	<Point X="213" Y="303" T="1" />
+ 	</Gesture>
