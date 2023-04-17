@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf8'?>
+<Gesture Name="78" Subject="1" Speed="Medium" Number="8" NumPts="42" AppName="Gestures" AppVersion="1.0.0.0" Date="Monday, April 17, 2023" TimeOfDay="00:19:53 AM"><Point X="190" Y="152" />
+ 	<Point X="190" Y="153" />
+ 	<Point X="190" Y="154" />
+ 	<Point X="191" Y="154" />
+ 	<Point X="194" Y="154" />
+ 	<Point X="196" Y="154" />
+ 	<Point X="200" Y="154" />
+ 	<Point X="214" Y="155" />
+ 	<Point X="221" Y="156" />
+ 	<Point X="230" Y="156" />
+ 	<Point X="238" Y="156" />
+ 	<Point X="242" Y="157" />
+ 	<Point X="247" Y="157" />
+ 	<Point X="253" Y="157" />
+ 	<Point X="257" Y="157" />
+ 	<Point X="258" Y="157" />
+ 	<Point X="258" Y="158" />
+ 	<Point X="258" Y="160" />
+ 	<Point X="257" Y="164" />
+ 	<Point X="256" Y="169" />
+ 	<Point X="253" Y="179" />
+ 	<Point X="252" Y="184" />
+ 	<Point X="250" Y="193" />
+ 	<Point X="248" Y="202" />
+ 	<Point X="245" Y="214" />
+ 	<Point X="244" Y="219" />
+ 	<Point X="242" Y="228" />
+ 	<Point X="242" Y="232" />
+ 	<Point X="242" Y="238" />
+ 	<Point X="242" Y="242" />
+ 	<Point X="241" Y="244" />
+ 	<Point X="241" Y="247" />
+ 	<Point X="241" Y="253" />
+ 	<Point X="240" Y="257" />
+ 	<Point X="240" Y="261" />
+ 	<Point X="240" Y="262" />
+ 	<Point X="240" Y="263" />
+ 	<Point X="240" Y="265" />
+ 	<Point X="240" Y="266" />
+ 	<Point X="240" Y="268" />
+ 	<Point X="240" Y="269" />
+ 	<Point X="240" Y="269" />
+ 	</Gesture>

@@ -43,6 +43,7 @@ gestureCount = 0
 
 gestureList = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
+
 def part4(_):
     # Shows the welcome message to user, indicates the application start
     messagebox.showinfo("Gesture","Welcome!")
@@ -56,7 +57,7 @@ def part4(_):
     # print("cwd ", cwd)
     
     # Storing directory name
-    dir = "Project2" + '\\'+ "usersamples"
+    dir = "Project2" + '/'+ "usersamples" if (platform == "darwin") else "Project2" + '\\'+ "usersamples"
     path = ""
     count = 0
     # pathCheck = cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir
@@ -80,7 +81,7 @@ def part4(_):
 def insertXML(dataset):
     cwd = os.getcwd()
     # print("cwd ", cwd)
-    dir = "usersamples"
+    dir = "Project2" + '/'+ "usersamples" if (platform == "darwin") else "Project2" + '\\'+ "usersamples"
     # tempPath = cwd+ '/'+ dir if (platform == "darwin") else cwd + '\\' + dir
     
     # Get the count of current directories present
@@ -159,7 +160,7 @@ def submit():
     
     cwd = os.getcwd()
     # print(type(cwd))
-    dir = "usersamples"
+    dir = "Project2" + '/'+ "usersamples" if (platform == "darwin") else "Project2" + '\\'+ "usersamples"
     path = ""
 
     # Clear Screen when user clicks Submit gesture
