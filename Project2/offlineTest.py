@@ -114,8 +114,8 @@ GestureType = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "E
 totalUserAccuracies = []
 
 # Iterating in users
-# for U in list(dataDict.keys())[0]:
-for U in dataDict.keys():
+for U in list(dataDict.keys())[0]:
+# for U in dataDict.keys():
     scoreList = []
     # print("U, ---------------", U)
     count=0
@@ -127,7 +127,7 @@ for U in dataDict.keys():
         # print("E, ---------------", E)
         
         # Iterating for 10 iterations
-        for itr in range(1, 101):
+        for itr in range(1, 2):
             print("User:", U, "Example Count:", E, "Iteration:", itr)
             recoScore = 0
             
