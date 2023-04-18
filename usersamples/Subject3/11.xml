@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf8'?>
+<Gesture Name="11" Subject="3" Speed="Medium" Number="1" NumPts="21" AppName="Gestures" AppVersion="1.0.0.0" Date="Monday, April 17, 2023" TimeOfDay="01:13:59 AM"><Point X="201" Y="179" />
+ 	<Point X="201" Y="180" />
+ 	<Point X="201" Y="181" />
+ 	<Point X="202" Y="183" />
+ 	<Point X="202" Y="196" />
+ 	<Point X="203" Y="216" />
+ 	<Point X="203" Y="249" />
+ 	<Point X="203" Y="271" />
+ 	<Point X="203" Y="293" />
+ 	<Point X="203" Y="303" />
+ 	<Point X="203" Y="319" />
+ 	<Point X="203" Y="328" />
+ 	<Point X="203" Y="332" />
+ 	<Point X="203" Y="336" />
+ 	<Point X="204" Y="337" />
+ 	<Point X="204" Y="338" />
+ 	<Point X="204" Y="339" />
+ 	<Point X="204" Y="340" />
+ 	<Point X="204" Y="342" />
+ 	<Point X="204" Y="343" />
+ 	<Point X="204" Y="343" />
+ 	</Gesture>
