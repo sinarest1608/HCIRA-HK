@@ -230,7 +230,7 @@ def scaleTo(points, size):
     newPoints = []
     for i in range(0, len(points)):
         qx = points[i].X * (size/b.Width)
-        qy = points[i].Y * (size/b.Height)
+        qy = points[i].Y * (size/b.Height) if (b.Height!=0) else points[i].Y * (size/1)
         newPoints.append(Point(qx, qy))
     return newPoints
 
