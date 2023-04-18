@@ -24,7 +24,7 @@ for fileName in os.listdir(current_directory):
         newroot = ET.Element('Gesture')
 
         newroot.set("Name", gestureList[int(xml[0])] + "0" + xml[1])
-        newroot.set("Subject", "1")
+        newroot.set("Subject", "2")
         newroot.set("Speed", "Medium")
         newroot.set("Number", root.attrib.get('Number'))
         newroot.set("NumPts", root.attrib.get('NumPts'))

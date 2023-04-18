@@ -1,25 +1,40 @@
 <?xml version='1.0' encoding='utf8'?>
-<Gesture Name="One01" Subject="1" Speed="Medium" Number="10" NumPts="23" Milliseconds="1024" AppName="Gestures" AppVersion="1.0.0.0" Date="Monday, April 17, 2023" TimeOfDay="00:36:14 AM"><Point X="239" Y="122" T="1" />
- 	<Point X="239" Y="123" T="1" />
- 	<Point X="238" Y="124" T="1" />
- 	<Point X="238" Y="128" T="1" />
- 	<Point X="238" Y="132" T="1" />
- 	<Point X="237" Y="138" T="1" />
- 	<Point X="235" Y="149" T="1" />
- 	<Point X="233" Y="158" T="1" />
+<Gesture Name="One01" Subject="2" Speed="Medium" Number="1" NumPts="38" Milliseconds="1024" AppName="Gestures" AppVersion="1.0.0.0" Date="Monday, April 17, 2023" TimeOfDay="00:36:14 AM"><Point X="237" Y="123" T="1" />
+ 	<Point X="237" Y="124" T="1" />
+ 	<Point X="237" Y="125" T="1" />
+ 	<Point X="236" Y="126" T="1" />
+ 	<Point X="236" Y="129" T="1" />
+ 	<Point X="236" Y="133" T="1" />
+ 	<Point X="236" Y="134" T="1" />
+ 	<Point X="235" Y="138" T="1" />
+ 	<Point X="235" Y="140" T="1" />
+ 	<Point X="234" Y="147" T="1" />
+ 	<Point X="234" Y="153" T="1" />
+ 	<Point X="233" Y="162" T="1" />
  	<Point X="232" Y="167" T="1" />
- 	<Point X="232" Y="179" T="1" />
- 	<Point X="231" Y="188" T="1" />
- 	<Point X="227" Y="210" T="1" />
- 	<Point X="227" Y="219" T="1" />
- 	<Point X="226" Y="228" T="1" />
- 	<Point X="226" Y="242" T="1" />
- 	<Point X="225" Y="249" T="1" />
- 	<Point X="225" Y="255" T="1" />
- 	<Point X="225" Y="260" T="1" />
- 	<Point X="225" Y="263" T="1" />
- 	<Point X="225" Y="267" T="1" />
- 	<Point X="225" Y="268" T="1" />
- 	<Point X="225" Y="269" T="1" />
- 	<Point X="225" Y="269" T="1" />
+ 	<Point X="232" Y="176" T="1" />
+ 	<Point X="230" Y="188" T="1" />
+ 	<Point X="230" Y="195" T="1" />
+ 	<Point X="230" Y="200" T="1" />
+ 	<Point X="230" Y="217" T="1" />
+ 	<Point X="230" Y="221" T="1" />
+ 	<Point X="230" Y="232" T="1" />
+ 	<Point X="230" Y="241" T="1" />
+ 	<Point X="230" Y="257" T="1" />
+ 	<Point X="230" Y="269" T="1" />
+ 	<Point X="230" Y="288" T="1" />
+ 	<Point X="230" Y="297" T="1" />
+ 	<Point X="230" Y="306" T="1" />
+ 	<Point X="230" Y="313" T="1" />
+ 	<Point X="230" Y="319" T="1" />
+ 	<Point X="230" Y="323" T="1" />
+ 	<Point X="230" Y="328" T="1" />
+ 	<Point X="230" Y="334" T="1" />
+ 	<Point X="231" Y="336" T="1" />
+ 	<Point X="231" Y="339" T="1" />
+ 	<Point X="232" Y="341" T="1" />
+ 	<Point X="232" Y="343" T="1" />
+ 	<Point X="232" Y="344" T="1" />
+ 	<Point X="232" Y="345" T="1" />
+ 	<Point X="232" Y="345" T="1" />
  	</Gesture>
